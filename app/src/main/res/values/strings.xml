@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Greeting_Card</string>
+    <string name="hint_search">Search</string>
+    <string name="title_app">Category</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_closed">Close Navigation Drawer</string>
+    <string name="tab1">Greeting Cards</string>
+    <string name="tab2">Favourites</string>
+
+</resources>
