@@ -6,9 +6,10 @@
     android:id="@+id/custom_image">
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="100dp"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@drawable/main_base_aqua"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="32dp"

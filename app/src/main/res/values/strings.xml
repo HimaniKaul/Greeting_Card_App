@@ -6,5 +6,8 @@
     <string name="navigation_drawer_closed">Close Navigation Drawer</string>
     <string name="tab1">Greeting Cards</string>
     <string name="tab2">Favourites</string>
+    <string name="fab1">Create Custom Library</string>
+    <string name="fab2">Image From Gallery</string>
+    <string name="crop_title">Crop Image</string>
 
 </resources>

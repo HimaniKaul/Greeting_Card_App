@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.himani_k.greeting_card">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".greeting_cards_class"/>
+        <activity android:name=".create_custom_card"/>
+        <activity android:name=".image_from_gallery"/>
+        <activity android:name=".crop_class"/>
     </application>
 
 </manifest>

@@ -1,12 +1,10 @@
 package com.example.himani_k.greeting_card;
 
-import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-
 
 
 public class greeting_cards_class extends AppCompatActivity
@@ -47,7 +45,7 @@ public class greeting_cards_class extends AppCompatActivity
         //fragment
         tab_One fragment = new tab_One();
         fragment.getActivity();
-    }
+        }
 
         @Override
         public void onFragmentInteraction(Uri uri) { }

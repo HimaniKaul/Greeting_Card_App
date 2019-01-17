@@ -1,6 +1,5 @@
                 package com.example.himani_k.greeting_card;
 
-
                 import android.content.Context;
                 import android.content.Intent;
                 import android.os.Bundle;
@@ -18,7 +17,6 @@
                     Toolbar myToolbar;
                     private DrawerLayout drawerLayout;
                     Context context;
-
 
                     @Override
                     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +46,14 @@
                             }
                         });
 
-
-
                         //code for navigation bar
                         drawerLayout=(DrawerLayout) findViewById(R.id.drawer_layout);
                         ActionBarDrawerToggle drawerToggle; // takes care of everything
                         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,myToolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_closed);
                         drawerLayout.addDrawerListener(drawerToggle);
                         drawerToggle.syncState(); //rotating the hamburger icon
-
-
                     }
+
                    @Override
                         public void onBackPressed() {
                         if(drawerLayout.isDrawerOpen(Gravity.START))

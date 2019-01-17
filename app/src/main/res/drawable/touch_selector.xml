@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- When the view is "activated".  In SINGLE_CHOICE_MODE, it flags the active row
+         of a ListView -->
+    <item android:state_activated="true"
+          android:color="@color/colorAccent" />
+
+    <!-- Default, "just hangin' out" state. -->
+    <item android:color="@color/colorPrimaryDark" />
+
+
+
+</selector>

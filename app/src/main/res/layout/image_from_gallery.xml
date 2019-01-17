@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--Setting Toolbar-->
+        <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:id="@+id/toolbar2"
+            android:background="@color/colorPrimary">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:layout_gravity="center"
+                android:id="@+id/crop"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </android.support.v7.widget.Toolbar>
+         <LinearLayout
+             android:id="@+id/ll"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             android:layout_below="@+id/toolbar2">
+
+             <!--Setting ImageView-->
+             <ImageView
+                 android:id="@+id/imageView_plus"
+                 android:layout_width="match_parent"
+                 android:layout_height="340dp"
+                 android:src="@drawable/main_base_aqua"
+                 android:layout_gravity="center"
+                 android:scaleType="fitXY"
+                 android:adjustViewBounds="true"
+                 android:layout_margin="11dp"/>
+
+             <!--Setting the horizontal scroll bar-->
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="horizontal">
+             <HorizontalScrollView
+                 android:layout_width="match_parent"
+                 android:layout_height="55dp"
+                 android:layout_marginTop="3dp"
+                 android:fillViewport="true"
+                 android:scrollbars="none">
+
+                 <!--Setting ImageButtons-->
+                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+                     <ImageButton
+                    android:id="@+id/gallery"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:background="#FFF"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:tint="@drawable/touch_selector"
+                    app:srcCompat="@drawable/gallary_one" />
+                     <ImageButton
+                    android:id="@+id/frame"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="#FFF"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:tint="@drawable/touch_selector"
+                    app:srcCompat="@drawable/frame" />
+                     <ImageButton
+                    android:id="@+id/sticker"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="#FFF"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:tint="@drawable/touch_selector"
+                    app:srcCompat="@drawable/sticker" />
+                     <ImageButton
+                    android:id="@+id/textt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="#FFF"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:tint="@drawable/touch_selector"
+                    app:srcCompat="@drawable/text" />
+                     <ImageButton
+                    android:id="@+id/quotes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="#FFF"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:tint="@drawable/touch_selector"
+                    app:srcCompat="@drawable/quotes" />
+                     <ImageButton
+                    android:id="@+id/trash"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="#FFF"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:tint="@drawable/touch_selector"
+                    app:srcCompat="@drawable/trash" />
+                     <ImageButton
+                    android:id="@+id/crop_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="#FFF"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:tint="@drawable/touch_selector"
+                    app:srcCompat="@drawable/crop" />
+                    </LinearLayout>
+             </HorizontalScrollView>
+          </LinearLayout>
+         </LinearLayout>
+
+        <!--Setting the fab-->
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/fab_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="27dp"
+            app:fab_addButtonColorNormal="@color/colorAccent"
+            app:fab_labelStyle="@style/custom_fab" />
+    </RelativeLayout>
