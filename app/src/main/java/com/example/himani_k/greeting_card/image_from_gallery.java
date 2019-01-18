@@ -9,8 +9,11 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,12 +22,15 @@ import java.io.InputStream;
 public class image_from_gallery extends AppCompatActivity {
     private int IMAGE_GALLERY_REQUEST =0 ;
     ImageView imageView;
+    boolean flag=false;
+    HorizontalScrollView horizontalScrollView;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_from_gallery);
 
         imageView=(ImageView) findViewById(R.id.imageView_plus);
+        horizontalScrollView= findViewById(R.id.horizontal_view);
 
         //starts the crop window
         ImageButton crop= (ImageButton) findViewById(R.id.crop_1);
@@ -37,14 +43,22 @@ public class image_from_gallery extends AppCompatActivity {
         });
 
         //open gallery
-        ImageButton gal= (ImageButton) findViewById(R.id.gallery);
+        ImageButton gal= (ImageButton) findViewById(R.id.gallery_id);
         gal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 on_Image_from_Gallery();
             }
         });
-    }
+
+        //Floating action Button
+        FloatingActionsMenu fb=(FloatingActionsMenu) findViewById(R.id.fab_menu_one);
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                set_gone(view);
+            }
+        }); }
 
          // fetching image from the gallery
         public void on_Image_from_Gallery() {
@@ -76,4 +90,17 @@ public class image_from_gallery extends AppCompatActivity {
                     catch (FileNotFoundException e) {
                         e.printStackTrace(); } }
             } }
+
+
+        public void set_gone(View view) {
+        if (flag){
+            // means true
+           horizontalScrollView.setVisibility(View.INVISIBLE);
+            flag = false;
+        }
+        else{
+           horizontalScrollView.setVisibility(View.VISIBLE);
+            flag = true;
+        }
+    }
 }

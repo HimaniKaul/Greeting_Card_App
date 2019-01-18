@@ -2,7 +2,6 @@ package com.example.himani_k.greeting_card;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.GridView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 public class tab_One extends Fragment {
-    private static final int PICK_IMAGE = 0;
     GridView gv;
    int images[]={R.drawable.main_base_red, R.drawable.main_base_green,
            R.drawable.main_base_darkpurple, R.drawable.main_base_aqua,

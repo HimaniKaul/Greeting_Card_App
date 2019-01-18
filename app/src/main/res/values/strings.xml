@@ -8,6 +8,6 @@
     <string name="tab2">Favourites</string>
     <string name="fab1">Create Custom Library</string>
     <string name="fab2">Image From Gallery</string>
-    <string name="crop_title">Crop Image</string>
+    <string name="crop_title_Image">Crop Image</string>
 
 </resources>
