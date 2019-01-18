@@ -21,13 +21,61 @@
                     android:textSize="16sp"
                     android:textStyle="bold"/>
             </android.support.v7.widget.Toolbar>
-
+    <!--setting above toolbar-->
+    <!--the arrows-->
     <LinearLayout
-        android:id="@+id/ll"
+        android:id="@+id/arrow_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/toolbar2">
+        android:layout_height="32dp"
+        android:layout_below="@+id/toolbar2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal"
+        android:weightSum="7">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            />
+        <ImageView
+            android:id="@+id/imageButton1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/trash"
+            android:layout_weight="1"
+            android:tint = "@drawable/touch_selector" />
+        <ImageView
+            android:id="@+id/imageButton2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/undo"
+            android:layout_weight="1"
+            android:tint = "@drawable/touch_selector" />
+        <ImageView
+            android:id="@+id/imageButton3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/redo"
+            android:layout_weight="1"
+            android:tint = "@drawable/touch_selector"/>
+        <ImageView
+            android:id="@+id/imageButton4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/download"
+            android:layout_weight="1"
+            android:tint = "@drawable/touch_selector"/>
+        <ImageView
+            android:id="@+id/imageButton5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/share"
+            android:layout_weight="1"
+            android:tint = "@drawable/touch_selector" />
+    </LinearLayout>
+
+    <!--Setting the image view-->
         <ImageView
             android:id="@+id/imageView_plus"
             android:layout_width="match_parent"
@@ -35,106 +83,93 @@
             android:background="@color/colorPrimary"
             android:layout_gravity="center"
             android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:layout_margin="11dp"/>
-            <HorizontalScrollView
-                android:id="@+id/horizontal_view"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginTop="12dp"
-                android:visibility="invisible"
-                android:scrollbars="none">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:background="#FFF"
-                    android:orientation="horizontal">
-                    <ImageButton
-                        android:id="@+id/gallery_id"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="27dp"
-                        android:scaleType="fitXY"
-                        android:background="@drawable/button_selection"
-                        android:tint="@drawable/touch_selector"
-                        android:src="@drawable/gallary_one" />
-                    <ImageButton
-                        android:id="@+id/frame"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="27dp"
-                        android:scaleType="fitXY"
-                        android:background="@drawable/button_selection"
-                        android:tint="@drawable/touch_selector"
-                        android:src="@drawable/frame" />
-                    <ImageButton
-                        android:id="@+id/sticker"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="27dp"
-                        android:scaleType="fitXY"
-                        android:background="@drawable/button_selection"
-                        android:tint="@drawable/touch_selector"
-                        android:src="@drawable/sticker" />
-                    <ImageButton
-                        android:id="@+id/text"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="27dp"
-                        android:background="@drawable/button_selection"
-                        android:tint="@drawable/touch_selector"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/text" />
-                    <ImageButton
-                        android:id="@+id/quote"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="27dp"
-                        android:tint="@drawable/touch_selector"
-                        android:scaleType="fitXY"
-                        android:background="@drawable/button_selection"
-                        android:src="@drawable/quotes" />
-                    <ImageButton
-                        android:id="@+id/delete"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="27dp"
-                        android:tint="@drawable/touch_selector"
-                        android:scaleType="fitXY"
-                        android:background="@drawable/button_selection"
-                        android:src="@drawable/trash" />
-                    <ImageButton
-                        android:id="@+id/crop_1"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="27dp"
-                        android:layout_marginRight="27dp"
-                        android:tint="@drawable/touch_selector"
-                        android:scaleType="fitXY"
-                        android:background="@drawable/button_selection"
-                        android:src="@drawable/crop" />
+            android:layout_margin="8dp"
+            android:layout_below="@+id/arrow_bar"
+            android:adjustViewBounds="true" />
 
-                </LinearLayout>
-            </HorizontalScrollView>
-    </LinearLayout>
+        <!-- setting the scroll-->
+        <LinearLayout
+            android:id="@+id/scroll_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/imageView_plus">
+            <ImageButton
+                android:id="@+id/gallery"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:background="#FFF"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:tint="@drawable/touch_selector"
+                app:srcCompat="@drawable/gallary_one" />
+            <ImageButton
+                android:id="@+id/frame"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#FFF"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:tint="@drawable/touch_selector"
+                app:srcCompat="@drawable/frame" />
+            <ImageButton
+                android:id="@+id/sticker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#FFF"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:tint="@drawable/touch_selector"
+                app:srcCompat="@drawable/sticker" />
+            <ImageButton
+                android:id="@+id/textt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#FFF"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:tint="@drawable/touch_selector"
+                app:srcCompat="@drawable/text" />
+            <ImageButton
+                android:id="@+id/quotes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#FFF"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:tint="@drawable/touch_selector"
+                app:srcCompat="@drawable/quotes" />
+            <ImageButton
+                android:id="@+id/crop_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#FFF"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:tint="@drawable/touch_selector"
+                app:srcCompat="@drawable/crop" />
+        </LinearLayout>
+
     <!--Setting the fab-->
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_menu_one"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ll"
+        android:layout_height="63dp"
+        android:layout_below="@+id/scroll_layout"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="30dp"
-        app:fab_colorNormal="@color/colorAccent"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="7dp"
+        android:onClick="set_flag"
+        app:fab_addButtonColorNormal="@color/colorAccent"
+        app:fab_addButtonStrokeVisible="true"
         app:fab_labelStyle="@style/custom_fab" />
 </RelativeLayout>
 
@@ -144,7 +179,7 @@
 
 
 
-        <!--
+        <!-- the horizontal scroll bar tends to infinity here
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -156,82 +191,7 @@
                 android:fillViewport="true"
                 android:scrollbars="none">
 
-                <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="match_parent"
-                   android:orientation="horizontal"
-                   android:weightSum="7">
-                    <ImageButton
-                   android:id="@+id/gallery"
-                   android:layout_width="0dp"
-                   android:layout_height="match_parent"
-                   android:layout_weight="0.3"
-                   android:background="#FFF"
-                   android:padding="10dp"
-                   android:scaleType="fitCenter"
-                   android:tint="@drawable/touch_selector"
-                   app:srcCompat="@drawable/gallary_one" />
-                    <ImageButton
-                   android:id="@+id/frame"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="0.3"
-                   android:background="#FFF"
-                   android:padding="10dp"
-                   android:scaleType="fitCenter"
-                   android:tint="@drawable/touch_selector"
-                   app:srcCompat="@drawable/frame" />
-                    <ImageButton
-                   android:id="@+id/sticker"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="0.3"
-                   android:background="#FFF"
-                   android:padding="10dp"
-                   android:scaleType="fitCenter"
-                   android:tint="@drawable/touch_selector"
-                   app:srcCompat="@drawable/sticker" />
-                    <ImageButton
-                   android:id="@+id/textt"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="0.3"
-                   android:background="#FFF"
-                   android:padding="10dp"
-                   android:scaleType="fitCenter"
-                   android:tint="@drawable/touch_selector"
-                   app:srcCompat="@drawable/text" />
-                    <ImageButton
-                   android:id="@+id/quotes"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="0.3"
-                   android:background="#FFF"
-                   android:padding="10dp"
-                   android:scaleType="fitCenter"
-                   android:tint="@drawable/touch_selector"
-                   app:srcCompat="@drawable/quotes" />
-                    <ImageButton
-                   android:id="@+id/trash"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="0.3"
-                   android:background="#FFF"
-                   android:padding="10dp"
-                   android:scaleType="fitCenter"
-                   android:tint="@drawable/touch_selector"
-                   app:srcCompat="@drawable/trash" />
-                    <ImageButton
-                   android:id="@+id/crop_1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="0.3"
-                   android:background="#FFF"
-                   android:padding="10dp"
-                   android:scaleType="fitCenter"
-                   android:tint="@drawable/touch_selector"
-                   app:srcCompat="@drawable/crop" />
-                   </LinearLayout>
+
             </HorizontalScrollView>
          </LinearLayout>
         </LinearLayout> -->
