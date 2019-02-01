@@ -24,7 +24,7 @@
         <activity android:name=".greeting_cards_class"/>
         <activity android:name=".create_custom_card"/>
         <activity android:name=".image_from_gallery"/>
-        <activity android:name=".crop_class"/>
+        <activity android:name=".crop_image_class"/>
     </application>
 
 </manifest>

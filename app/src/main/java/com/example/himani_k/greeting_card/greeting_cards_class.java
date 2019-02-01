@@ -16,7 +16,7 @@ public class greeting_cards_class extends AppCompatActivity
         setContentView(R.layout.greeting_cards_tab);
 
         //tab layout
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Greeting Cards"));
         tabLayout.addTab(tabLayout.newTab().setText("Favourite"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);

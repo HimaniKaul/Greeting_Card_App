@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="160dp"
+    android:layout_width="170dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/custom_image">
+    <android.support.v7.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="160dp"
+        app:cardCornerRadius="8dp">
+    <LinearLayout
+        android:layout_width="170dp"
+        android:layout_height="160dp">
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/pongal" />
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

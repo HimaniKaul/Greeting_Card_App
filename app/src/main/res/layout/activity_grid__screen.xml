@@ -9,9 +9,10 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     tools:context=".grid_Screen">
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <include android:id="@+id/toolbar1"
                  layout="@layout/toolbar"/>
    <GridView
@@ -25,7 +26,7 @@
         android:numColumns="2"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/fragment_navigation_drawer"

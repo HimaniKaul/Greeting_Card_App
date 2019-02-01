@@ -40,10 +40,9 @@ public class greeting_card_adapter extends BaseAdapter {
             LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView=inflater.inflate(R.layout.card_list,null); }
             //Get View
-            ImageView img=(ImageView) convertView.findViewById(R.id.imageView1);
+            ImageView img= convertView.findViewById(R.id.imageView1);
             //Assign data
             img.setImageResource(imageId[position]);
-            //img.setScaleType(ImageView.ScaleType.CENTER_CROP);
             return convertView;
 
     }

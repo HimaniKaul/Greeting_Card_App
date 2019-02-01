@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#BDBDBD</color>
     <color name="colorAccent">#D81B60</color>
     <color name="color_background">#FFF</color>
+    <color name="button_background">#CC000000</color> <!-- 99 is for alpha and others pairs zero's are for R G B -->
 </resources>
