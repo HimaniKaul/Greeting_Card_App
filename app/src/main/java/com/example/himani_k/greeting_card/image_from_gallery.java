@@ -126,7 +126,8 @@ public class image_from_gallery extends AppCompatActivity {
             public void onClick(View view) {
                 if(imageView.getDrawable() != null){
                 BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-                bitmap = drawable.getBitmap(); //checking the current image for delete    
+                bitmap = drawable.getBitmap(); //checking the current image for delete   
+                //bitmap=null;
                 imageView.setImageBitmap(null);}
             }
         });
