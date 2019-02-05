@@ -124,7 +124,10 @@ public class image_from_gallery extends AppCompatActivity {
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageView.setImageBitmap(null);
+                if(imageView.getDrawable() != null){
+                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                bitmap = drawable.getBitmap(); //checking the current image for delete    
+                imageView.setImageBitmap(null);}
             }
         });
 
