@@ -76,15 +76,15 @@
     </LinearLayout>
 
     <!--Setting the image view-->
-        <ImageView
+        <ja.burhanrashid52.photoeditor.PhotoEditorView
             android:id="@+id/imageView_plus"
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:background="@color/colorPrimary"
             android:layout_gravity="center"
+            android:layout_below="@+id/arrow_bar"
             android:scaleType="fitXY"
             android:layout_margin="8dp"
-            android:layout_below="@+id/arrow_bar"
             android:adjustViewBounds="true" />
 
         <!-- setting the scroll-->
