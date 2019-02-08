@@ -27,10 +27,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -40,19 +37,28 @@ import ja.burhanrashid52.photoeditor.PhotoEditorView;
 
 public class image_from_gallery extends AppCompatActivity {
     private int IMAGE_GALLERY_REQUEST = 0;
-    PhotoEditorView imageView;
+    static  PhotoEditorView imageView;
     Uri imageUri = null;
     Bitmap bitmap;
     InputStream inputStream;
     LinearLayout linearLayout;
     public static Context contextOfApplication;
     private String stringUri;
-    PhotoEditor mPhotoEditor;
+    static PhotoEditor mPhotoEditor; static int count;
 
+    public static void changeImage(Bitmap bitmap, Context context){
+        if(count>0)
+        {  mPhotoEditor.undo();
+            mPhotoEditor.addImage(bitmap);}
+        else if(count ==0 )
+        {   imageView.getSource().setImageBitmap(null);
+            imageView.getSource().setImageBitmap(bitmap);}
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.image_from_gallery);
         contextOfApplication = getApplicationContext();
 
@@ -76,9 +82,8 @@ public class image_from_gallery extends AppCompatActivity {
         crop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                        if(!mPhotoEditor.isCacheEmpty()) {
-                        imageView.buildDrawingCache();
+                if(imageView.getSource().getDrawable()!=null || !mPhotoEditor.isCacheEmpty()) {
+                try {   imageView.buildDrawingCache();
                         bitmap = imageView.getDrawingCache();
                         String stringUri;
                         stringUri = imageUri.toString();
@@ -87,9 +92,9 @@ public class image_from_gallery extends AppCompatActivity {
                         intent.putExtra("KEY", stringUri);
                         startActivity(intent);
                     }
-                } catch (Exception e) {
+                 catch (Exception e) {
                     Log.e("error ::", "" + e);
-                }
+                }}
             }
         });
 
@@ -115,7 +120,6 @@ public class image_from_gallery extends AppCompatActivity {
             public void onMenuCollapsed() {
                 linearLayout.setVisibility(View.INVISIBLE);
             }
-
             @Override
             public void onMenuExpanded() {
                 linearLayout.setVisibility(View.VISIBLE);
@@ -137,10 +141,12 @@ public class image_from_gallery extends AppCompatActivity {
                 }});
             //open gallery
         ImageButton gal = findViewById(R.id.gallery);
-        gal.setOnClickListener(new View.OnClickListener() {
+        gal.setOnClickListener(
+                new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 on_Image_from_Gallery();
+                count++;
             }
         });
 
@@ -161,7 +167,7 @@ public class image_from_gallery extends AppCompatActivity {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mPhotoEditor.isCacheEmpty())  {
+                if (!mPhotoEditor.isCacheEmpty() && imageView.getSource().getDrawable() != null)  {
                     shareImage(imageUri);
                 } }});
 
@@ -170,7 +176,7 @@ public class image_from_gallery extends AppCompatActivity {
         i4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mPhotoEditor.isCacheEmpty()) {
+                if (!mPhotoEditor.isCacheEmpty() && imageView.getSource().getDrawable() != null) {
                     ActivityCompat.requestPermissions(image_from_gallery.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getSource().getDrawable();
                     bitmap = drawable.getBitmap();
@@ -201,7 +207,8 @@ public class image_from_gallery extends AppCompatActivity {
                                 public void onSuccess(@NonNull String imagePath) {
                                     Toast.makeText(image_from_gallery.this, "Image Saved", Toast.LENGTH_SHORT).show();
                                     Log.e("PhotoEditor", "Image Saved Successfully");
-                                    imageView.getSource().setImageBitmap(null); }
+                                    imageView.getSource().setImageBitmap(null);
+                                    mPhotoEditor.clearAllViews();}
                                 @Override
                                 public void onFailure(@NonNull Exception exception) {
                                     Log.e("PhotoEditor", "Failed to save Image");
@@ -213,7 +220,7 @@ public class image_from_gallery extends AppCompatActivity {
                         refresh_gallery(new_file);
                     }
                     // if directory already exists
-                    if (!mPhotoEditor.isCacheEmpty())  {
+                    if (!mPhotoEditor.isCacheEmpty() ||imageView.getSource().getDrawable() != null)  {
                     SimpleDateFormat sdf=new SimpleDateFormat("yyyymmsshhmmss");
                     String date=sdf.format(new Date());
                     String name="Img"+date+".jpg";
@@ -234,6 +241,7 @@ public class image_from_gallery extends AppCompatActivity {
                             public void onSuccess(@NonNull String imagePath) {
                                 Toast.makeText(image_from_gallery.this, "Image Saved", Toast.LENGTH_SHORT).show();
                                 imageView.getSource().setImageBitmap(null);
+                                mPhotoEditor.clearAllViews();
                                 Log.e("PhotoEditor", "Image Saved Successfully");
                             }
                             @Override

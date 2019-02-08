@@ -1,13 +1,17 @@
 package com.example.himani_k.greeting_card;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+
+import com.fenchtose.nocropper.BitmapResult;
+import com.fenchtose.nocropper.CropperView;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -15,14 +19,13 @@ import java.util.Objects;
 
 public class crop_image_class extends AppCompatActivity
 {   Bitmap bitmap;
-    ImageView ig;
+    CropperView ig;
     Uri uri;
     String stringUri;
     InputStream inputStream = null;
     @Override
     protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
+    {   super.onCreate(savedInstanceState);
         setContentView(R.layout.crop_image1);
         ig=findViewById(R.id.bitmap_iv);
 
@@ -51,15 +54,24 @@ public class crop_image_class extends AppCompatActivity
         { getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);}
 
-    }
+        //crop
+        ImageView tick= findViewById(R.id.imageButton3);
+        tick.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View v) {
+                 BitmapResult result = ig.getCroppedBitmap();
+                 //ig.getPaddingColor();
+                if (bitmap!=null)
+                {    bitmap = result.getBitmap();
+                     ig.setImageBitmap(bitmap);
+                   try{
+                       image_from_gallery.changeImage(bitmap,crop_image_class.this); finish(); }
+                     catch(Exception e){Log.e("error ::", "" + e);}
+                }}});}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-}
+        } return super.onOptionsItemSelected(item); }}
