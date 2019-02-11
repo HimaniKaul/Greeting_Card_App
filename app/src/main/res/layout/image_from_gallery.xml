@@ -80,7 +80,6 @@
             android:id="@+id/imageView_plus"
             android:layout_width="match_parent"
             android:layout_height="320dp"
-            android:background="@color/colorPrimary"
             android:layout_gravity="center"
             android:layout_below="@+id/arrow_bar"
             android:scaleType="fitXY"
@@ -93,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:orientation="horizontal"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:layout_below="@+id/imageView_plus"
             android:layout_marginTop="1dp">
             <ImageButton
@@ -172,4 +171,100 @@
         app:fab_addButtonColorNormal="@color/colorAccent"
         app:fab_addButtonStrokeVisible="true"
         app:fab_labelStyle="@style/custom_fab"/>
+
+    <!-- setting the Text-->
+    <LinearLayout
+        android:id="@+id/text_design"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/imageView_plus"
+        android:background="#000"
+        android:visibility="gone"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal">
+        <Spinner
+            android:id="@+id/sp_text"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#fff" />
+
+        <Spinner
+            android:id="@+id/sp_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#fff" />
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#fff" />
+
+        <ImageView
+            android:id="@+id/bold"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bold" />
+
+        <ImageView
+            android:id="@+id/italic"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/italic" />
+
+        <ImageView
+            android:id="@+id/group"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/group" />
+
+        <ImageView
+            android:id="@+id/text"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_base" />
+
+        <ImageView
+            android:id="@+id/l_align"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/left_align" />
+
+        <ImageView
+            android:id="@+id/c_align"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/center_align" />
+
+        <ImageView
+            android:id="@+id/r_align"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/right" />
+    </LinearLayout>
 </RelativeLayout>

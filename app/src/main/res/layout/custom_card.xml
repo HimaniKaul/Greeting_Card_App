@@ -1,7 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</android.support.constraint.ConstraintLayout>
+    android:layout_height="match_parent"
+    tools:context=".create_custom_card"
+    android:orientation="vertical">
+    <!--Setting Toolbar-->
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/toolbar2"
+        android:background="@color/color_background">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:layout_gravity="center"
+            android:id="@+id/crop_title_bar"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+    </android.support.v7.widget.Toolbar>
+        <RelativeLayout
+            android:id="@+id/first_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/second_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/card_layout"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="center"
+                android:visibility="visible">
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/custom_landscape_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    app:borderWidth="0dp"
+                    android:src="@drawable/ic_add_black_24dp_white"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/card_layout_portrait"
+                android:layout_width="200dp"
+                android:layout_height="280dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="75dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="center"
+                android:visibility="gone">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/custom_portrait_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:backgroundTint="@color/colorPrimaryDark"
+                app:borderWidth="0dp"
+                android:src="@drawable/ic_add_black_24dp_white"/>
+            </LinearLayout>
+    </RelativeLayout>
+            <TextView
+                android:id="@+id/txt_custom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/create"
+                android:layout_marginTop="2dp"
+                android:layout_below="@+id/second_layout"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="10dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:layout_below="@id/txt_custom">
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:id="@+id/ls1"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="30dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center">
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/landscape_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:borderWidth="0dp"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:src="@drawable/ic_add_black_24dp_white" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/pt1"
+                android:layout_width="140dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorPrimary">
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/portrait_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:src="@drawable/ic_add_black_24dp_white"
+                    app:borderWidth="0dp" />
+            </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+</LinearLayout>

@@ -10,7 +10,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -35,24 +34,26 @@ import java.util.Objects;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
 
-public class image_from_gallery extends AppCompatActivity {
+public class image_from_gallery extends AppCompatActivity  {
     private int IMAGE_GALLERY_REQUEST = 0;
     static  PhotoEditorView imageView;
     Uri imageUri = null;
-    Bitmap bitmap;
+    static Bitmap bitmap;
     InputStream inputStream;
     LinearLayout linearLayout;
     public static Context contextOfApplication;
-    private String stringUri;
-    static PhotoEditor mPhotoEditor; static int count;
+    private String stringUri;   int flag=0;
+    static PhotoEditor mPhotoEditor; static int count, back;
 
-    public static void changeImage(Bitmap bitmap, Context context){
+    public static void changeImage(Bitmap bitmap_one, crop_image_class crop_image_class){
         if(count>0)
-        {  mPhotoEditor.undo();
-            mPhotoEditor.addImage(bitmap);}
-        else if(count ==0 )
-        {   imageView.getSource().setImageBitmap(null);
-            imageView.getSource().setImageBitmap(bitmap);}
+        {   mPhotoEditor.undo();
+            mPhotoEditor.addImage(bitmap_one);}
+            else if(count==0)
+        {   BitmapDrawable drawable = (BitmapDrawable)imageView.getSource().getDrawable();
+            bitmap= drawable.getBitmap(); //checking the current image for delete
+            imageView.getSource().setImageDrawable(null);
+            imageView.getSource().setImageBitmap(bitmap_one);}
     }
 
     @Override
@@ -73,6 +74,7 @@ public class image_from_gallery extends AppCompatActivity {
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
+            back++;
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -99,6 +101,8 @@ public class image_from_gallery extends AppCompatActivity {
         });
 
         //receiving the image first time
+        int v= tab_One.getVariable();
+        if (v==1){ System.out.println(v);
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey("KEY")) {
             stringUri = extras.getString("KEY");
@@ -111,20 +115,28 @@ public class image_from_gallery extends AppCompatActivity {
             imageView.getSource().setImageBitmap(bitmap);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
+        }}
 
         //rotating the fab button
+         final LinearLayout lay= findViewById(R.id.text_design);
         FloatingActionsMenu fb = findViewById(R.id.fab_button);
         fb.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuCollapsed() {
-                linearLayout.setVisibility(View.INVISIBLE);
-            }
+                linearLayout.setVisibility(View.GONE);
+                if(flag==1){lay.setVisibility(View.GONE);flag=0;} }
             @Override
             public void onMenuExpanded() {
                 linearLayout.setVisibility(View.VISIBLE);
-            }
-        });
+                // calling the text layout
+                ImageButton ig_text= findViewById(R.id.textt);
+                ig_text.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(flag==0)
+                          {   linearLayout.setVisibility(View.GONE);
+                              lay.setVisibility(View.VISIBLE);
+                              flag=1;} }}); }});
 
         //setting undo and redo
         ImageView ig2= findViewById(R.id.imageButton2);
@@ -139,15 +151,14 @@ public class image_from_gallery extends AppCompatActivity {
                 public void onClick(View view) {
                    mPhotoEditor.redo();
                 }});
-            //open gallery
+        //open gallery
         ImageButton gal = findViewById(R.id.gallery);
         gal.setOnClickListener(
                 new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                on_Image_from_Gallery();
                 count++;
-            }
+                on_Image_from_Gallery(); }
         });
 
         //adding a delete option
@@ -155,10 +166,8 @@ public class image_from_gallery extends AppCompatActivity {
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (imageView.getSource().getDrawable() != null) {
-                    BitmapDrawable drawable = (BitmapDrawable) imageView.getSource().getDrawable();
-                    bitmap = drawable.getBitmap(); //checking the current image for delete
-                    imageView.getSource().setImageBitmap(null);
+                if (imageView.getSource().getDrawable()!= null) {
+                    imageView.getSource().setImageDrawable(null);
                     mPhotoEditor.clearAllViews(); }}
         });
 
@@ -167,7 +176,7 @@ public class image_from_gallery extends AppCompatActivity {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mPhotoEditor.isCacheEmpty() && imageView.getSource().getDrawable() != null)  {
+                if (imageView.getSource().getDrawable()!=null)  {
                     shareImage(imageUri);
                 } }});
 
@@ -176,57 +185,17 @@ public class image_from_gallery extends AppCompatActivity {
         i4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mPhotoEditor.isCacheEmpty() && imageView.getSource().getDrawable() != null) {
+                if (!mPhotoEditor.isCacheEmpty() || imageView.getSource().getDrawable()!=null) {
                     ActivityCompat.requestPermissions(image_from_gallery.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                    BitmapDrawable drawable = (BitmapDrawable) imageView.getSource().getDrawable();
-                    bitmap = drawable.getBitmap();
                     //path to sd card
                     File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
                     //create a folder
                     File dir = new File(path + "/Greeting Card/");
-                    if (!dir.exists() && dir.mkdirs()) {
-                        //creating for first time
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyymmsshhmmss");
-                        String date = sdf.format(new Date());
-                        String name = "Img" + date + ".jpg";
-                        String fileName = dir.getAbsolutePath() + "/" + name;
-                        File new_file = new File(fileName);
-                        try {
-                            if (ActivityCompat.checkSelfPermission(image_from_gallery.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                // TODO: Consider calling
-                                //    ActivityCompat#requestPermissions
-                                // here to request the missing permissions, and then overriding
-                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                //                                          int[] grantResults)
-                                // to handle the case where the user grants the permission. See the documentation
-                                // for ActivityCompat#requestPermissions for more details.
-                                return;
-                            }
-                            mPhotoEditor.saveAsFile(fileName, new PhotoEditor.OnSaveListener() {
-                                @Override
-                                public void onSuccess(@NonNull String imagePath) {
-                                    Toast.makeText(image_from_gallery.this, "Image Saved", Toast.LENGTH_SHORT).show();
-                                    Log.e("PhotoEditor", "Image Saved Successfully");
-                                    imageView.getSource().setImageBitmap(null);
-                                    mPhotoEditor.clearAllViews();}
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    Log.e("PhotoEditor", "Failed to save Image");
-                                }
-                            });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        refresh_gallery(new_file);
-                    }
-                    // if directory already exists
-                    if (!mPhotoEditor.isCacheEmpty() ||imageView.getSource().getDrawable() != null)  {
                     SimpleDateFormat sdf=new SimpleDateFormat("yyyymmsshhmmss");
                     String date=sdf.format(new Date());
                     String name="Img"+date+".jpg";
                     String fileName = dir.getAbsolutePath()+"/"+name;
                     File new_file=new File(fileName);
-
                     try {if (ActivityCompat.checkSelfPermission(image_from_gallery.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
                         //    ActivityCompat#requestPermissions
@@ -238,20 +207,19 @@ public class image_from_gallery extends AppCompatActivity {
                         return; }
                         mPhotoEditor.saveAsFile(fileName, new PhotoEditor.OnSaveListener() {
                             @Override
-                            public void onSuccess(@NonNull String imagePath) {
+                            public void onSuccess(String imagePath) {
                                 Toast.makeText(image_from_gallery.this, "Image Saved", Toast.LENGTH_SHORT).show();
-                                imageView.getSource().setImageBitmap(null);
+                                imageView.getSource().setImageDrawable(null);
                                 mPhotoEditor.clearAllViews();
-                                Log.e("PhotoEditor", "Image Saved Successfully");
-                            }
+                                Log.e("PhotoEditor", "Image Saved Successfully"); }
                             @Override
-                            public void onFailure(@NonNull Exception exception) {
+                            public void onFailure(Exception exception) {
                                 Log.e("PhotoEditor", "Failed to save Image");
-                            }
-                        });}
+                                Log.e("error ::",""+exception);
+                            }});}
                         catch (Exception e) {e.printStackTrace(); }
-                    refresh_gallery(new_file); }} }});
-    }   private void refresh_gallery(File fileName) {
+                    refresh_gallery(new_file); } }}); }
+                    private void refresh_gallery(File fileName) {
         Intent intent=new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         intent.setData(imageUri.fromFile(fileName));
         sendBroadcast(intent);
@@ -269,7 +237,6 @@ public class image_from_gallery extends AppCompatActivity {
         photopicker.setDataAndType(data, "image/*");
         startActivityForResult(photopicker, IMAGE_GALLERY_REQUEST);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK) {
@@ -278,6 +245,7 @@ public class image_from_gallery extends AppCompatActivity {
                 try {
                     inputStream =getContentResolver().openInputStream(imageUri);
                     bitmap= BitmapFactory.decodeStream(inputStream);
+                    System.out.println("2");
                     //setting the image in the imageView
                     mPhotoEditor.addImage(bitmap);
                 } catch (FileNotFoundException e) {
@@ -297,8 +265,7 @@ public class image_from_gallery extends AppCompatActivity {
         sharingIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         sharingIntent.setType("image/*");
         sharingIntent.putExtra(Intent.EXTRA_STREAM, imagePath);
-        startActivity(Intent.createChooser(sharingIntent, "Share Image Using"));
-    }
+        startActivity(Intent.createChooser(sharingIntent, "Share Image Using")); }
 
 }
 

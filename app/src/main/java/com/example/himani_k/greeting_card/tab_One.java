@@ -12,8 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -24,7 +27,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class tab_One extends Fragment {
     private static final int IMAGE_GALLERY_REQUEST = 0;
-    GridView gv;
+    GridView gv; public static int flag_check;
     int images[] = {R.drawable.mahashivratri, R.drawable.holi_card,
             R.drawable.summer, R.drawable.diwali,
             R.drawable.thanks_giving, R.drawable.new_year};
@@ -36,13 +39,15 @@ public class tab_One extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View root_view = inflater.inflate(R.layout.fragment_tab__one, null);
         gv = root_view.findViewById(R.id.grid_view1);
-        final RelativeLayout rl = root_view.findViewById(R.id.root_layout);
-
         //setting Adapter
         greeting_card_adapter adapter = new greeting_card_adapter(getActivity(), images);
         gv.setAdapter(adapter);
-
-        //setting the alpha
+       /* gv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {    public void onItemClick(AdapterView parent, View v, int position, long id) {
+             Intent intent=new Intent(getApplicationContext());}
+        });
+*/
+       //setting the alpha
         FloatingActionsMenu fab_m = root_view.findViewById(R.id.fab_menu);
         final View v=root_view.findViewById(R.id.view);
         fab_m.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
@@ -61,6 +66,7 @@ public class tab_One extends Fragment {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flag_check=1;
                 on_Image_from_Gallery();
             }
         });
@@ -111,6 +117,10 @@ public class tab_One extends Fragment {
                 }
             }
         }
+    }
+    public static int getVariable()
+    {
+        return flag_check;
     }
 
     public interface OnFragmentInteractionListener {

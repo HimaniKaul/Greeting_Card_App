@@ -9,6 +9,7 @@
     <string name="fab1">Create Custom Library</string>
     <string name="fab2">Image From Gallery</string>
     <string name="crop_title_Image">Crop Image</string>
+    <string name="create">Custom Card</string>
 
     <string name="share_activity">Share Activity Demo</string>
     <string name="shared_activity">Shared Activity Demo</string>

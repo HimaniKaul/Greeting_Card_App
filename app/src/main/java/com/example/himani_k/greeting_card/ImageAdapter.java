@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
@@ -33,8 +34,10 @@ public class ImageAdapter extends BaseAdapter {
             convertView=inflater.inflate(R.layout.first_cards,null); }
             //Get View
             ImageView img= convertView.findViewById(R.id.imageView1);
+            TextView tv=convertView.findViewById(R.id.tv);
             //Assign data
              img.setImageResource(mThumbIds[position]);
+             tv.setText(mTextIds[position]);
              return convertView;
     }
     // references to our images
@@ -43,5 +46,9 @@ public class ImageAdapter extends BaseAdapter {
             R.drawable.shivratri, R.drawable.valentine,
             R.drawable.republicday,R.drawable.holi,
     };
+    // references to our images
+    private String[] mTextIds = {"#Pongal","#Sankrant","#Shivratri","#Valentine","#Republic Day","#Holi"};
+
+
 }
 
