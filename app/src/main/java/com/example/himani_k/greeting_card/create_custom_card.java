@@ -51,7 +51,11 @@ public class create_custom_card extends AppCompatActivity {
             land.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(create_custom_card.this, "Hi", Toast.LENGTH_SHORT).show();
+                    try{
+                        Intent i= new Intent(create_custom_card.this, image_from_gallery.class);
+                        startActivity(i);}
+                    catch (Exception e)
+                    {Log.e("error ::",""+e); }
                 }
             });
             fab_pot.setOnClickListener(new View.OnClickListener() {

@@ -85,7 +85,6 @@
             android:scaleType="fitXY"
             android:layout_margin="8dp"
             android:adjustViewBounds="true" />
-
         <!-- setting the scroll-->
         <LinearLayout
             android:id="@+id/scroll_layout"

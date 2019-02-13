@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -65,7 +67,11 @@ public class image_from_gallery extends AppCompatActivity  {
 
         imageView = findViewById(R.id.imageView_plus);
         linearLayout = findViewById(R.id.scroll_layout);
-        mPhotoEditor = new PhotoEditor.Builder(this, imageView).build();
+        Typeface mTextRobotoTf = ResourcesCompat.getFont(this, R.font.roboto_medium);
+        mPhotoEditor = new PhotoEditor.Builder(this, imageView)
+                .setPinchTextScalable(true)
+                .setDefaultTextTypeface(mTextRobotoTf)
+                .build();
 
         //setting back button
         Toolbar toolbar = findViewById(R.id.toolbar2);
@@ -100,6 +106,27 @@ public class image_from_gallery extends AppCompatActivity  {
             }
         });
 
+        //stickers
+        final ImageButton stickers=findViewById(R.id.sticker);
+        stickers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(image_from_gallery.this,stickers.class);
+                startActivity(i);
+            }
+        });
+
+        //frame
+        final ImageButton frames=findViewById(R.id.frame);
+        frames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(image_from_gallery.this,Frames.class);
+                startActivity(i);
+            }
+        });
+
+
         //receiving the image first time
         int v= tab_One.getVariable();
         if (v==1){ System.out.println(v);
@@ -116,6 +143,7 @@ public class image_from_gallery extends AppCompatActivity  {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }}
+        else if(v==2){imageView.getSource().setImageDrawable(null); }
 
         //rotating the fab button
          final LinearLayout lay= findViewById(R.id.text_design);
@@ -129,14 +157,20 @@ public class image_from_gallery extends AppCompatActivity  {
             public void onMenuExpanded() {
                 linearLayout.setVisibility(View.VISIBLE);
                 // calling the text layout
-                ImageButton ig_text= findViewById(R.id.textt);
+                 ImageButton ig_text= findViewById(R.id.textt);
                 ig_text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(flag==0)
                           {   linearLayout.setVisibility(View.GONE);
                               lay.setVisibility(View.VISIBLE);
-                              flag=1;} }}); }});
+                              flag=1;
+                              TextEditorDialogFragment textEditorDialogFragment = TextEditorDialogFragment.show(image_from_gallery.this);
+                              textEditorDialogFragment.setOnTextEditorListener(new TextEditorDialogFragment.TextEditor() {
+                              @Override
+                              public void onDone(String inputText, int colorCode) {
+                               mPhotoEditor.addText(inputText, colorCode);
+                              }});}}});}});
 
         //setting undo and redo
         ImageView ig2= findViewById(R.id.imageButton2);
@@ -158,7 +192,7 @@ public class image_from_gallery extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 count++;
-                on_Image_from_Gallery(); }
+                on_Image_from_Gallery();}
         });
 
         //adding a delete option
@@ -168,7 +202,7 @@ public class image_from_gallery extends AppCompatActivity  {
             public void onClick(View view) {
                 if (imageView.getSource().getDrawable()!= null) {
                     imageView.getSource().setImageDrawable(null);
-                    mPhotoEditor.clearAllViews(); }}
+                    mPhotoEditor.clearAllViews(); count=0; }}
         });
 
         //sharing image
@@ -210,8 +244,7 @@ public class image_from_gallery extends AppCompatActivity  {
                             public void onSuccess(String imagePath) {
                                 Toast.makeText(image_from_gallery.this, "Image Saved", Toast.LENGTH_SHORT).show();
                                 imageView.getSource().setImageDrawable(null);
-                                mPhotoEditor.clearAllViews();
-                                Log.e("PhotoEditor", "Image Saved Successfully"); }
+                                mPhotoEditor.clearAllViews(); count=0;}
                             @Override
                             public void onFailure(Exception exception) {
                                 Log.e("PhotoEditor", "Failed to save Image");
@@ -224,6 +257,8 @@ public class image_from_gallery extends AppCompatActivity  {
         intent.setData(imageUri.fromFile(fileName));
         sendBroadcast(intent);
     }
+
+
 
     // fetching image from the gallery
     public void on_Image_from_Gallery() {
@@ -245,9 +280,8 @@ public class image_from_gallery extends AppCompatActivity  {
                 try {
                     inputStream =getContentResolver().openInputStream(imageUri);
                     bitmap= BitmapFactory.decodeStream(inputStream);
-                    System.out.println("2");
                     //setting the image in the imageView
-                    mPhotoEditor.addImage(bitmap);
+                     mPhotoEditor.addImage(bitmap);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } } } }
@@ -256,6 +290,7 @@ public class image_from_gallery extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
+            count=0;
             finish(); // close this activity and return to preview activity (if there is any)
         }return super.onOptionsItemSelected(item); }
 
@@ -266,6 +301,13 @@ public class image_from_gallery extends AppCompatActivity  {
         sharingIntent.setType("image/*");
         sharingIntent.putExtra(Intent.EXTRA_STREAM, imagePath);
         startActivity(Intent.createChooser(sharingIntent, "Share Image Using")); }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        count=0;
+    }
+
 
 }
 

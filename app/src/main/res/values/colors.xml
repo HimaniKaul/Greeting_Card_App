@@ -5,4 +5,9 @@
     <color name="colorAccent">#D81B60</color>
     <color name="color_background">#FFF</color>
     <color name="button_background">#CC000000</color> <!-- 99 is for alpha and others pairs zero's are for R G B -->
+    <color name="red">#b71c1c</color>
+    <color name="indigo">#3f51b5</color>
+    <color name="purple">#673ab7</color>
+    <color name="green">#009688</color>
+    <color name="yellow">#ffeb3b</color>
 </resources>

@@ -46,7 +46,7 @@ public class tab_One extends Fragment {
         {    public void onItemClick(AdapterView parent, View v, int position, long id) {
              Intent intent=new Intent(getApplicationContext());}
         });
-*/
+       */
        //setting the alpha
         FloatingActionsMenu fab_m = root_view.findViewById(R.id.fab_menu);
         final View v=root_view.findViewById(R.id.view);
@@ -75,7 +75,7 @@ public class tab_One extends Fragment {
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getActivity(),"Second Button",Toast.LENGTH_SHORT).show();
+                flag_check=2;
                 Intent i = new Intent(getActivity(), create_custom_card.class);
                 startActivity(i);
             }

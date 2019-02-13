@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="100dp"
+    android:layout_width="100dp"
+    android:id="@+id/custom_image"
+    android:background="@drawable/border_for_image">
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp">
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/sticker_two"
+        android:scaleType="fitCenter" />
+    </LinearLayout>
+</RelativeLayout>
