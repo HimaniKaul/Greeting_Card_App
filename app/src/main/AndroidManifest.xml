@@ -27,6 +27,7 @@
         <activity android:name=".crop_image_class"/>
         <activity android:name=".stickers"/>
         <activity android:name=".Frames"/>
+        <activity android:name=".quotes"/>
 
     </application>
 

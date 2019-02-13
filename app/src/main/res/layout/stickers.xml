@@ -25,9 +25,9 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar2"
         android:gravity="center"
-        android:horizontalSpacing="20dp"
+        android:horizontalSpacing="10dp"
         android:numColumns="3"
-        android:verticalSpacing="20dp"
+        android:verticalSpacing="10dp"
         android:layout_margin="16dp"/>
 
 

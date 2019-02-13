@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.Objects;
 
 public class create_custom_card extends AppCompatActivity {
+    public static int layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,7 @@ public class create_custom_card extends AppCompatActivity {
             land.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try{
+                    try{layout=1;
                         Intent i= new Intent(create_custom_card.this, image_from_gallery.class);
                         startActivity(i);}
                     catch (Exception e)
@@ -61,7 +62,7 @@ public class create_custom_card extends AppCompatActivity {
             fab_pot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try{
+                    try{layout=2;
                     Intent i= new Intent(create_custom_card.this, image_from_gallery.class);
                     startActivity(i);}
                     catch (Exception e)
@@ -75,4 +76,11 @@ public class create_custom_card extends AppCompatActivity {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
-        }return super.onOptionsItemSelected(item); }}
+        }return super.onOptionsItemSelected(item); }
+
+    public static int getLayout()
+    {
+        return layout;
+    }
+
+}

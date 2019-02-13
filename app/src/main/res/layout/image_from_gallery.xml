@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <!--Setting Toolbar-->
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -74,25 +73,42 @@
             android:layout_weight="1"
             android:tint = "@drawable/touch_selector" />
     </LinearLayout>
-
     <!--Setting the image view-->
+    <LinearLayout
+        android:id="@+id/layout_id"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_below="@+id/arrow_bar"
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
         <ja.burhanrashid52.photoeditor.PhotoEditorView
             android:id="@+id/imageView_plus"
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:layout_gravity="center"
-            android:layout_below="@+id/arrow_bar"
             android:scaleType="fitXY"
-            android:layout_margin="8dp"
+            android:visibility="visible"
             android:adjustViewBounds="true" />
-        <!-- setting the scroll-->
+    <ja.burhanrashid52.photoeditor.PhotoEditorView
+        android:id="@+id/imageView_portrait"
+        android:layout_width="220dp"
+        android:layout_height="320dp"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:background="@color/colorPrimary"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:visibility="gone"
+        android:adjustViewBounds="true" />
+    </LinearLayout>
+    <!-- setting the scroll-->
         <LinearLayout
             android:id="@+id/scroll_layout"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:orientation="horizontal"
             android:visibility="gone"
-            android:layout_below="@+id/imageView_plus"
+            android:layout_below="@+id/layout_id"
             android:layout_marginTop="1dp">
             <ImageButton
                 android:id="@+id/gallery"
@@ -170,13 +186,12 @@
         app:fab_addButtonColorNormal="@color/colorAccent"
         app:fab_addButtonStrokeVisible="true"
         app:fab_labelStyle="@style/custom_fab"/>
-
     <!-- setting the Text-->
     <LinearLayout
         android:id="@+id/text_design"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@+id/imageView_plus"
+        android:layout_below="@+id/layout_id"
         android:background="#000"
         android:visibility="gone"
         android:layout_marginTop="1dp"
@@ -186,14 +201,16 @@
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#fff" />
+            android:backgroundTint="#fff"
+            android:entries="@array/font_styles" />
 
         <Spinner
             android:id="@+id/sp_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#fff" />
+            android:backgroundTint="#fff"
+            android:entries="@array/font_sizes"/>
 
         <View
             android:layout_width="3dp"

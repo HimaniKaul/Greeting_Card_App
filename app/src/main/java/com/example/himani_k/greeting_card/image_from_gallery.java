@@ -1,6 +1,7 @@
 package com.example.himani_k.greeting_card;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -44,6 +45,7 @@ public class image_from_gallery extends AppCompatActivity  {
     InputStream inputStream;
     LinearLayout linearLayout;
     public static Context contextOfApplication;
+    PhotoEditorView portrait; PhotoEditorView landscape;
     private String stringUri;   int flag=0;
     static PhotoEditor mPhotoEditor; static int count, back;
 
@@ -58,6 +60,7 @@ public class image_from_gallery extends AppCompatActivity  {
             imageView.getSource().setImageBitmap(bitmap_one);}
     }
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +69,9 @@ public class image_from_gallery extends AppCompatActivity  {
         contextOfApplication = getApplicationContext();
 
         imageView = findViewById(R.id.imageView_plus);
+        landscape = findViewById(R.id.imageView_plus);
         linearLayout = findViewById(R.id.scroll_layout);
+        portrait=findViewById(R.id.imageView_portrait);
         Typeface mTextRobotoTf = ResourcesCompat.getFont(this, R.font.roboto_medium);
         mPhotoEditor = new PhotoEditor.Builder(this, imageView)
                 .setPinchTextScalable(true)
@@ -106,6 +111,16 @@ public class image_from_gallery extends AppCompatActivity  {
             }
         });
 
+        //quotes
+        final ImageButton quotes1=findViewById(R.id.quotes);
+        quotes1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(image_from_gallery.this,quotes.class);
+                startActivity(i);
+            }
+        });
+
         //stickers
         final ImageButton stickers=findViewById(R.id.sticker);
         stickers.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +144,7 @@ public class image_from_gallery extends AppCompatActivity  {
 
         //receiving the image first time
         int v= tab_One.getVariable();
+        int v1= create_custom_card.getLayout();
         if (v==1){ System.out.println(v);
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey("KEY")) {
@@ -143,7 +159,18 @@ public class image_from_gallery extends AppCompatActivity  {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }}
-        else if(v==2){imageView.getSource().setImageDrawable(null); }
+        else if(v==2){
+            imageView.getSource().setImageDrawable(null);
+            if(v1==1){
+                  landscape.setVisibility(View.VISIBLE);
+                  portrait.setVisibility(View.GONE);}
+                  else if(v1==2)
+              {   imageView=findViewById(R.id.imageView_portrait);
+                  portrait.setVisibility(View.VISIBLE);
+                  landscape.setVisibility(View.GONE);
+                  mPhotoEditor = new PhotoEditor.Builder(this, imageView).build(); }
+
+        }
 
         //rotating the fab button
          final LinearLayout lay= findViewById(R.id.text_design);
