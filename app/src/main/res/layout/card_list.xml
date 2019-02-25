@@ -9,7 +9,8 @@
         android:layout_height="200dp">
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/mahashivratri" />
@@ -18,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:orientation="horizontal"
-        android:weightSum="10"
         android:layout_alignParentBottom="true"
         android:background="#4f706b70">
         <TextView
@@ -27,19 +27,19 @@
             android:layout_height="32dp"
             android:gravity="center"
             android:layout_weight="9" />
-        <ImageView
-            android:id="@+id/imageView2"
+        <!--<ImageView-->
+            <!--android:id="@+id/imageView2"-->
+            <!--android:layout_width="15dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:src="@drawable/ic_favorite_border_black_24dp" />-->
+        <ToggleButton
             android:layout_width="15dp"
             android:layout_height="match_parent"
+            android:id="@+id/myToggleButton"
             android:layout_weight="1"
-            android:src="@drawable/ic_favorite_border_black_24dp" />
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="15dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_favorite_black_24dp"
-            android:visibility="gone"/>
+            android:textOn=""
+            android:textOff=""/>
     </LinearLayout>
 </RelativeLayout>
 

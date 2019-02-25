@@ -3,8 +3,8 @@ package com.example.himani_k.greeting_card;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -12,77 +12,110 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
+import ja.burhanrashid52.photoeditor.SaveSettings;
 
-public class image_from_gallery extends AppCompatActivity  {
+public class image_from_gallery extends AppCompatActivity implements  s.StickerListener, frame.FrameListener {
     private int IMAGE_GALLERY_REQUEST = 0;
     static  PhotoEditorView imageView;
-    Uri imageUri = null;
+    Uri imageUri,share_uri = null;
     static Bitmap bitmap;
     InputStream inputStream;
     LinearLayout linearLayout;
+    private s mStickerBSFragment;
+    private frame mframeBSFragment;
     public static Context contextOfApplication;
     PhotoEditorView portrait; PhotoEditorView landscape;
     private String stringUri;   int flag=0;
     static PhotoEditor mPhotoEditor; static int count, back;
+    private Spinner s, s1;
+    private ArrayList<String> categories;
+    private ArrayAdapter<String> dataAdapter;
+    private ArrayList<String> categories1;
+    private ArrayAdapter<String> dataAdapter1;
+    int undo,download;
+    public static int first;
 
     public static void changeImage(Bitmap bitmap_one, crop_image_class crop_image_class){
         if(count>0)
-        {   mPhotoEditor.undo();
-            mPhotoEditor.addImage(bitmap_one);}
-            else if(count==0)
-        {   BitmapDrawable drawable = (BitmapDrawable)imageView.getSource().getDrawable();
-            bitmap= drawable.getBitmap(); //checking the current image for delete
-            imageView.getSource().setImageDrawable(null);
-            imageView.getSource().setImageBitmap(bitmap_one);}
+        { if(imageView.getSource().getDrawable()!=null && first==1)
+            {   BitmapDrawable drawable = (BitmapDrawable)imageView.getSource().getDrawable();
+                bitmap= drawable.getBitmap(); //checking the current image for delete
+                imageView.getSource().setImageDrawable(null);
+                imageView.getSource().setImageBitmap(bitmap_one);
+                imageView.getSource().setAdjustViewBounds(true);
+                imageView.getSource().setScaleType(ImageView.ScaleType.FIT_XY); }
+                else{
+                    mPhotoEditor.undo();
+                    mPhotoEditor.addImage(bitmap_one);
+        } }
+        else if(count==0)
+            {   BitmapDrawable drawable = (BitmapDrawable)imageView.getSource().getDrawable();
+                bitmap= drawable.getBitmap(); //checking the current image for delete
+                imageView.getSource().setImageDrawable(null);
+                imageView.getSource().setImageBitmap(bitmap_one);
+                imageView.getSource().setAdjustViewBounds(true);
+                imageView.getSource().setScaleType(ImageView.ScaleType.FIT_XY);
+        }
     }
 
     @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.image_from_gallery);
+         //setting back button
+        Toolbar toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
         contextOfApplication = getApplicationContext();
-
+        s= findViewById(R.id.sp_text);
+        s1= findViewById(R.id.sp_size);
+        mStickerBSFragment = new s();
+        mStickerBSFragment.setStickerListener(this);
+        mframeBSFragment = new frame();
+        mframeBSFragment.setmFrameListener(this);
         imageView = findViewById(R.id.imageView_plus);
         landscape = findViewById(R.id.imageView_plus);
         linearLayout = findViewById(R.id.scroll_layout);
         portrait=findViewById(R.id.imageView_portrait);
+
+
         Typeface mTextRobotoTf = ResourcesCompat.getFont(this, R.font.roboto_medium);
         mPhotoEditor = new PhotoEditor.Builder(this, imageView)
                 .setPinchTextScalable(true)
                 .setDefaultTextTypeface(mTextRobotoTf)
                 .build();
 
-        //setting back button
-        Toolbar toolbar = findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
             back++;
@@ -90,12 +123,29 @@ public class image_from_gallery extends AppCompatActivity  {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        //spinner
+        categories = new ArrayList<String>();
+        categories.add("Roboto Light");
+        categories.add("Block");
+        categories.add("Capital");
+        dataAdapter = new ArrayAdapter<String>(this, R.layout.spinner_custom, categories);
+        s.setAdapter(dataAdapter);
+
+        categories1 = new ArrayList<String>();
+        categories1.add("10");
+        categories1.add("20");
+        categories1.add("30");
+        categories1.add("40");
+        categories1.add("50");
+        dataAdapter1 = new ArrayAdapter<String>(this, R.layout.font_size_spinner, categories1);
+        s1.setAdapter(dataAdapter1);
+
         //starts the crop window
         ImageButton crop = findViewById(R.id.crop_1);
         crop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imageView.getSource().getDrawable()!=null || !mPhotoEditor.isCacheEmpty()) {
+                if( undo!=1 &&(imageView.getSource().getDrawable()!=null || !mPhotoEditor.isCacheEmpty())) {
                 try {   imageView.buildDrawingCache();
                         bitmap = imageView.getDrawingCache();
                         String stringUri;
@@ -108,6 +158,14 @@ public class image_from_gallery extends AppCompatActivity  {
                  catch (Exception e) {
                     Log.e("error ::", "" + e);
                 }}
+
+                else if(undo==1){
+                    Toast.makeText(image_from_gallery.this, "You have undo the action", Toast.LENGTH_SHORT).show();
+                }
+
+                else{
+                    Toast.makeText(image_from_gallery.this, "Please Set the Image First", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -121,31 +179,33 @@ public class image_from_gallery extends AppCompatActivity  {
             }
         });
 
+
         //stickers
         final ImageButton stickers=findViewById(R.id.sticker);
         stickers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent(image_from_gallery.this,stickers.class);
-                startActivity(i);
-            }
+                  mStickerBSFragment.show(getSupportFragmentManager(), mStickerBSFragment.getTag());}
         });
+
 
         //frame
         final ImageButton frames=findViewById(R.id.frame);
         frames.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent(image_from_gallery.this,Frames.class);
-                startActivity(i);
+                try{
+                mframeBSFragment.show(getSupportFragmentManager(), mframeBSFragment.getTag());}
+                catch(Exception e){
+                    Log.e("error",""+e);
+                }
             }
         });
-
 
         //receiving the image first time
         int v= tab_One.getVariable();
         int v1= create_custom_card.getLayout();
-        if (v==1){ System.out.println(v);
+        if (v==1){
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey("KEY")) {
             stringUri = extras.getString("KEY");
@@ -156,21 +216,24 @@ public class image_from_gallery extends AppCompatActivity  {
             inputStream = getContentResolver().openInputStream(imageUri);
             bitmap = BitmapFactory.decodeStream(inputStream);
             imageView.getSource().setImageBitmap(bitmap);
-        } catch (FileNotFoundException e) {
+            imageView.getSource().setAdjustViewBounds(true);
+            imageView.getSource().setScaleType(ImageView.ScaleType.FIT_XY);
+        } catch (Exception e) {
             e.printStackTrace();
         }}
-        else if(v==2){
+        else if(v==2) {
             imageView.getSource().setImageDrawable(null);
-            if(v1==1){
-                  landscape.setVisibility(View.VISIBLE);
-                  portrait.setVisibility(View.GONE);}
-                  else if(v1==2)
-              {   imageView=findViewById(R.id.imageView_portrait);
-                  portrait.setVisibility(View.VISIBLE);
-                  landscape.setVisibility(View.GONE);
-                  mPhotoEditor = new PhotoEditor.Builder(this, imageView).build(); }
-
-        }
+            if (v1 == 1) {
+                landscape.setVisibility(View.VISIBLE);
+                portrait.setVisibility(View.GONE);
+            } else if (v1 == 2) {
+                portrait.setVisibility(View.VISIBLE);
+                landscape.setVisibility(View.GONE);
+                imageView=findViewById(R.id.imageView_portrait);
+                mPhotoEditor = new PhotoEditor.Builder(this, imageView)
+                        .setPinchTextScalable(true)
+                        .setDefaultTextTypeface(mTextRobotoTf)
+                        .build(); } }
 
         //rotating the fab button
          final LinearLayout lay= findViewById(R.id.text_design);
@@ -184,20 +247,26 @@ public class image_from_gallery extends AppCompatActivity  {
             public void onMenuExpanded() {
                 linearLayout.setVisibility(View.VISIBLE);
                 // calling the text layout
-                 ImageButton ig_text= findViewById(R.id.textt);
+                ImageButton ig_text = findViewById(R.id.textt);
                 ig_text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(flag==0)
-                          {   linearLayout.setVisibility(View.GONE);
-                              lay.setVisibility(View.VISIBLE);
-                              flag=1;
-                              TextEditorDialogFragment textEditorDialogFragment = TextEditorDialogFragment.show(image_from_gallery.this);
-                              textEditorDialogFragment.setOnTextEditorListener(new TextEditorDialogFragment.TextEditor() {
-                              @Override
-                              public void onDone(String inputText, int colorCode) {
-                               mPhotoEditor.addText(inputText, colorCode);
-                              }});}}});}});
+                        {   linearLayout.setVisibility(View.GONE);
+                            lay.setVisibility(View.VISIBLE);
+                            flag=1;
+                            TextEditorDialogFragment textEditorDialogFragment = TextEditorDialogFragment.show(image_from_gallery.this);
+                            textEditorDialogFragment.setOnTextEditorListener(new TextEditorDialogFragment.TextEditor() {
+                                @Override
+                                public void onDone(String inputText,int colorCode) {
+                                    mPhotoEditor.addText(inputText,getColor(R.color.button_background));
+
+                                }
+                            });
+                        }
+                    }
+                });
+            }});
 
         //setting undo and redo
         ImageView ig2= findViewById(R.id.imageButton2);
@@ -205,13 +274,34 @@ public class image_from_gallery extends AppCompatActivity  {
         ig2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                undo=1;
                 mPhotoEditor.undo();
             }});
             ig3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    undo=0;
                    mPhotoEditor.redo();
                 }});
+
+        //sharing image
+        ImageView share = findViewById(R.id.imageButton5);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                if (download==1 && imageView.getSource().getDrawable()!=null )  {
+                    shareImage(share_uri);
+                }
+                else if(download==0){
+                    Toast.makeText(image_from_gallery.this, "Please Download the Image First", Toast.LENGTH_SHORT).show(); }
+                    else{
+                    Toast.makeText(image_from_gallery.this, "Please set the image first", Toast.LENGTH_SHORT).show();
+                }
+                }
+                    catch (Exception e){Log.e("error",""+e);}
+            }});
+
         //open gallery
         ImageButton gal = findViewById(R.id.gallery);
         gal.setOnClickListener(
@@ -219,7 +309,8 @@ public class image_from_gallery extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 count++;
-                on_Image_from_Gallery();}
+                on_Image_from_Gallery();
+            }
         });
 
         //adding a delete option
@@ -227,65 +318,22 @@ public class image_from_gallery extends AppCompatActivity  {
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (imageView.getSource().getDrawable()!= null) {
+                if (imageView.getSource().getDrawable()!= null || !mPhotoEditor.isCacheEmpty()) {
                     imageView.getSource().setImageDrawable(null);
-                    mPhotoEditor.clearAllViews(); count=0; }}
+                    mPhotoEditor.clearAllViews(); }
+                else{
+                    Toast.makeText(image_from_gallery.this, "Please Set the Image First", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
-
-        //sharing image
-        ImageView share = findViewById(R.id.imageButton5);
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (imageView.getSource().getDrawable()!=null)  {
-                    shareImage(imageUri);
-                } }});
 
         //downloading image
         ImageView i4 = findViewById(R.id.imageButton4);
         i4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mPhotoEditor.isCacheEmpty() || imageView.getSource().getDrawable()!=null) {
-                    ActivityCompat.requestPermissions(image_from_gallery.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                    //path to sd card
-                    File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-                    //create a folder
-                    File dir = new File(path + "/Greeting Card/");
-                    SimpleDateFormat sdf=new SimpleDateFormat("yyyymmsshhmmss");
-                    String date=sdf.format(new Date());
-                    String name="Img"+date+".jpg";
-                    String fileName = dir.getAbsolutePath()+"/"+name;
-                    File new_file=new File(fileName);
-                    try {if (ActivityCompat.checkSelfPermission(image_from_gallery.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return; }
-                        mPhotoEditor.saveAsFile(fileName, new PhotoEditor.OnSaveListener() {
-                            @Override
-                            public void onSuccess(String imagePath) {
-                                Toast.makeText(image_from_gallery.this, "Image Saved", Toast.LENGTH_SHORT).show();
-                                imageView.getSource().setImageDrawable(null);
-                                mPhotoEditor.clearAllViews(); count=0;}
-                            @Override
-                            public void onFailure(Exception exception) {
-                                Log.e("PhotoEditor", "Failed to save Image");
-                                Log.e("error ::",""+exception);
-                            }});}
-                        catch (Exception e) {e.printStackTrace(); }
-                    refresh_gallery(new_file); } }}); }
-                    private void refresh_gallery(File fileName) {
-        Intent intent=new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        intent.setData(imageUri.fromFile(fileName));
-        sendBroadcast(intent);
-    }
-
-
+                showSaveDialog();
+            }});}
 
     // fetching image from the gallery
     public void on_Image_from_Gallery() {
@@ -308,7 +356,15 @@ public class image_from_gallery extends AppCompatActivity  {
                     inputStream =getContentResolver().openInputStream(imageUri);
                     bitmap= BitmapFactory.decodeStream(inputStream);
                     //setting the image in the imageView
-                     mPhotoEditor.addImage(bitmap);
+                    if(imageView.getSource().getDrawable()==null)
+                    {   first=1;
+                        imageView.getSource().setImageBitmap(bitmap);
+                        imageView.getSource().setAdjustViewBounds(true);
+                        imageView.getSource().setScaleType(ImageView.ScaleType.FIT_XY);
+                    }
+                    else{
+                        first=0;
+                        mPhotoEditor.addImage(bitmap);}
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } } } }
@@ -329,12 +385,126 @@ public class image_from_gallery extends AppCompatActivity  {
         sharingIntent.putExtra(Intent.EXTRA_STREAM, imagePath);
         startActivity(Intent.createChooser(sharingIntent, "Share Image Using")); }
 
-    @Override
-    public void onBackPressed() {
+        //show dialog box
+        private void showSaveDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you want to exit without saving image ?");
+            builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(imageView.getSource().getDrawable()!=null || !mPhotoEditor.isCacheEmpty()){
+                    saveImage();}
+                    else{
+                        Toast.makeText(image_from_gallery.this, "Please Set the Image First", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            builder.create().show();
+    }
+    @SuppressLint("MissingPermission")
+    private void saveImage()
+    {
+        if (imageView.getVisibility() == View.GONE) {
+            if (portrait.getSource().getDrawable() != null || !mPhotoEditor.isCacheEmpty()) {
+                try {
+                    ActivityCompat.requestPermissions(image_from_gallery.this, new String[]{Manifest.permission.
+                            WRITE_EXTERNAL_STORAGE}, 1);
+                    File file = new File(Environment.getExternalStorageDirectory()
+                            + File.separator + ""
+                            + System.currentTimeMillis() + ".png");
+                    Log.d("file path", file + "");
+                    try {
+                        file.createNewFile();
+                        SaveSettings saveSettings = new SaveSettings.Builder()
+                                .setClearViewsEnabled(true)
+                                .setTransparencyEnabled(true)
+                                .build();
+
+                        mPhotoEditor.saveAsFile(file.getAbsolutePath(), saveSettings, new PhotoEditor.OnSaveListener() {
+                            @Override
+                            public void onSuccess(@NonNull String imagePath) {
+                                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                                StrictMode.setVmPolicy(builder.build());
+                                Toast.makeText(image_from_gallery.this, "Success", Toast.LENGTH_SHORT).show();
+                               imageView.getSource().setImageURI(Uri.fromFile(new File(imagePath)));
+                               share_uri=Uri.fromFile(new File(imagePath)); download=1;
+                            }
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(image_from_gallery.this, "Failure" + exception, Toast.LENGTH_SHORT).show();
+                                Log.e("Error save image::", "" + exception); download=0;
+
+                            }
+                        });
+                    } catch (IOException e) {
+                        Log.e("error", "" + e);
+                    }
+                    refresh_gallery(file);
+                } catch (Exception e) {
+                    Log.e("error", "" + e);
+                }
+            }
+        }
+        else {
+            if (imageView.getSource().getDrawable() != null || !mPhotoEditor.isCacheEmpty()) {
+                try {
+                    ActivityCompat.requestPermissions(image_from_gallery.this, new String[]{Manifest.permission.
+                            WRITE_EXTERNAL_STORAGE}, 1);
+                    File file = new File(Environment.getExternalStorageDirectory()
+                            + File.separator + ""
+                            + System.currentTimeMillis() + ".png");
+                    Log.d("file path", file + "");
+                    try {
+                        file.createNewFile();
+                        SaveSettings saveSettings = new SaveSettings.Builder()
+                                .setClearViewsEnabled(true)
+                                .setTransparencyEnabled(true)
+                                .build();
+
+                        mPhotoEditor.saveAsFile(file.getAbsolutePath(), saveSettings, new PhotoEditor.OnSaveListener() {
+                            @Override
+                            public void onSuccess(@NonNull String imagePath) {
+                                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                                StrictMode.setVmPolicy(builder.build());
+                                Toast.makeText(image_from_gallery.this, "Success", Toast.LENGTH_SHORT).show();
+                               imageView.getSource().setImageURI(Uri.fromFile(new File(imagePath)));
+                                share_uri=Uri.fromFile(new File(imagePath)); download=1;
+                            }
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(image_from_gallery.this, "Failure" + exception, Toast.LENGTH_SHORT).show();
+                                download=0;
+                                Log.e("Error save image::", "" + exception);
+                            }
+                        });
+                    } catch (IOException e) {
+                        Log.e("error", "" + e);
+                    }
+                    refresh_gallery(file);
+                } catch (Exception e) {
+                    Log.e("error", "" + e);
+                }
+            }
+        }
+    }
+    private void refresh_gallery(File fileName) {
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(imageUri.fromFile(fileName));
+        sendBroadcast(intent); }
+
+        @Override
+        public void onBackPressed() {
         super.onBackPressed();
         count=0;
     }
 
-
+    @Override
+    public void onStickerClick(Bitmap bitmap) {
+        mPhotoEditor.addImage(bitmap);
+    }
+    @Override
+    public void onFrameClick(Bitmap bitmap) {
+        mPhotoEditor.addImage(bitmap);
+    }
 }
 

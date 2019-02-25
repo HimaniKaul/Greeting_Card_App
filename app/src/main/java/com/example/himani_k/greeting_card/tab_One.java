@@ -14,9 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -42,12 +39,10 @@ public class tab_One extends Fragment {
         //setting Adapter
         greeting_card_adapter adapter = new greeting_card_adapter(getActivity(), images);
         gv.setAdapter(adapter);
-       /* gv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {    public void onItemClick(AdapterView parent, View v, int position, long id) {
-             Intent intent=new Intent(getApplicationContext());}
-        });
-       */
-       //setting the alpha
+
+
+
+        //setting the alpha
         FloatingActionsMenu fab_m = root_view.findViewById(R.id.fab_menu);
         final View v=root_view.findViewById(R.id.view);
         fab_m.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {

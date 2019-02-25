@@ -86,7 +86,8 @@
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:layout_gravity="center"
-            android:scaleType="fitXY"
+            android:scaleType="centerInside"
+            android:background="@color/quotes"
             android:visibility="visible"
             android:adjustViewBounds="true" />
     <ja.burhanrashid52.photoeditor.PhotoEditorView
@@ -95,7 +96,7 @@
         android:layout_height="320dp"
         android:layout_gravity="center"
         android:scaleType="fitXY"
-        android:background="@color/colorPrimary"
+        android:background="@color/quotes"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
         android:visibility="gone"
@@ -194,38 +195,37 @@
         android:layout_below="@+id/layout_id"
         android:background="#000"
         android:visibility="gone"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="1dp"
         android:orientation="horizontal">
         <Spinner
             android:id="@+id/sp_text"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#fff"
-            android:entries="@array/font_styles" />
-
-        <Spinner
-            android:id="@+id/sp_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#fff"
-            android:entries="@array/font_sizes"/>
-
+            android:background="@null"
+            android:theme="@style/spinnerTheme" />
+        <Spinner
+            android:id="@+id/sp_size"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:theme="@style/spinnerTheme" />
         <View
-            android:layout_width="3dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:background="#fff" />
-
         <ImageView
             android:id="@+id/bold"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:scaleType="fitXY"
             android:src="@drawable/bold" />
 
@@ -254,6 +254,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:scaleType="fitXY"
+            android:tint="#18ffff"
             android:src="@drawable/btn_base" />
 
         <ImageView

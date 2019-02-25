@@ -10,8 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +49,7 @@ public class TextEditorDialogFragment extends DialogFragment {
     //Show dialog with default text input as empty and text color white
     public static TextEditorDialogFragment show(@NonNull AppCompatActivity appCompatActivity) {
         return show(appCompatActivity,
-                "", ContextCompat.getColor(appCompatActivity, R.color.color_background));
+                "", ContextCompat.getColor(appCompatActivity, R.color.button_background));
     }
     @Override
     public void onStart() {
@@ -79,21 +77,21 @@ public class TextEditorDialogFragment extends DialogFragment {
         mInputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         mAddTextDoneTextView = view.findViewById(R.id.add_text_done_tv);
 
-        //Setup the color picker for text color
-        RecyclerView addTextColorPickerRecyclerView = view.findViewById(R.id.add_text_color_picker_recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        addTextColorPickerRecyclerView.setLayoutManager(layoutManager);
-        addTextColorPickerRecyclerView.setHasFixedSize(true);
-        ColorPickerAdapter colorPickerAdapter = new ColorPickerAdapter(getActivity());
-        //This listener will change the text color when clicked on any color from picker
-        colorPickerAdapter.setOnColorPickerClickListener(new ColorPickerAdapter.OnColorPickerClickListener() {
-            @Override
-            public void onColorPickerClickListener(int colorCode) {
-                mColorCode = colorCode;
-                mAddTextEditText.setTextColor(colorCode);
-            }
-        });
-        addTextColorPickerRecyclerView.setAdapter(colorPickerAdapter);
+//        //Setup the color picker for text color
+//        RecyclerView addTextColorPickerRecyclerView = view.findViewById(R.id.add_text_color_picker_recycler_view);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+//        addTextColorPickerRecyclerView.setLayoutManager(layoutManager);
+//        addTextColorPickerRecyclerView.setHasFixedSize(true);
+//        ColorPickerAdapter colorPickerAdapter = new ColorPickerAdapter(getActivity());
+//        //This listener will change the text color when clicked on any color from picker
+//        colorPickerAdapter.setOnColorPickerClickListener(new ColorPickerAdapter.OnColorPickerClickListener() {
+//            @Override
+//            public void onColorPickerClickListener(int colorCode) {
+//                mColorCode = colorCode;
+//                mAddTextEditText.setTextColor(colorCode);
+//            }
+//        });
+//        addTextColorPickerRecyclerView.setAdapter(colorPickerAdapter);
         mAddTextEditText.setText(getArguments().getString(EXTRA_INPUT_TEXT));
         mColorCode = getArguments().getInt(EXTRA_COLOR_CODE);
         mAddTextEditText.setTextColor(mColorCode);

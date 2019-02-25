@@ -1,26 +1,35 @@
 package com.example.himani_k.greeting_card;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-       private String[] mData_set;
-       public static class MyViewHolder extends RecyclerView.ViewHolder {
+    private String[] mData_set;
+    Context context;
+
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
        public ImageView imageView;
        public TextView mTextView;
+       public RelativeLayout mParentLayout;
        public MyViewHolder(View v) {
             super(v);
             mTextView =v.findViewById(R.id.text_quote);
             imageView=v.findViewById(R.id.image_quote);
-        }
+            mParentLayout=v.findViewById(R.id.parent_layout);
+       }
     }
 
-    public MyAdapter(String[] myData_set) {
+    public MyAdapter(String[] myData_set, Context context) {
         mData_set = myData_set;
+        this.context=context;
     }
     // Create new views (invoked by the layout manager)
     @Override
@@ -28,13 +37,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         View v = LayoutInflater.from(parent.getContext())
                       .inflate(R.layout.quotes, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
-        return vh; }
+        return vh;
+    }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.mTextView.setText(mData_set[position]); }
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        holder.mTextView.setText(mData_set[position]);
+//        holder.mParentLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= new Intent(context,image_from_gallery.class);
+//                intent.putExtra("quotes",mData_set[position]);
+//                context.startActivity(intent);
+//            }
+//        });
+    }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    // Return the size of your data set (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mData_set.length;
