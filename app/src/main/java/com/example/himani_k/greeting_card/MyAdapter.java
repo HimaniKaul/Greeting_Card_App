@@ -43,14 +43,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.mTextView.setText(mData_set[position]);
-//        holder.mParentLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent= new Intent(context,image_from_gallery.class);
-//                intent.putExtra("quotes",mData_set[position]);
-//                context.startActivity(intent);
-//            }
-//        });
     }
 
     // Return the size of your data set (invoked by the layout manager)

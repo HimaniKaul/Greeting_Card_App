@@ -17,6 +17,7 @@
     <string name="share_image">Share Image</string>
     <string name="select_image">Select Image</string>
     <string name="shared_image">Shared Image</string>
+    <string name="enter_the_text">Enter The Text</string>
 
     <string-array name="font_styles">
         <item>Roboto Light</item>

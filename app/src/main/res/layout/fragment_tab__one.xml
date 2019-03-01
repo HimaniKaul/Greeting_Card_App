@@ -19,7 +19,6 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="20dp"
         android:layout_margin="16dp"/>
-
     <View
         android:id="@+id/view"
         android:layout_height="match_parent"

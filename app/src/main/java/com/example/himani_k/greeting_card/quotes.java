@@ -1,12 +1,14 @@
 package com.example.himani_k.greeting_card;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.Objects;
 
@@ -14,6 +16,7 @@ public class quotes extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    public static String quote="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +39,7 @@ public class quotes extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        String[] myDataset={"You have as much laughter as you have faith",
+        final String[] myDataset={"You have as much laughter as you have faith",
                              "The brain is wiser than sky",
                              "A goal should scare you a little and excite you a lot",
                              "Great things never come from comfort",
@@ -45,6 +48,18 @@ public class quotes extends AppCompatActivity {
                              "Adversity reveals the genius , prosperity conceals it"};
         mAdapter = new MyAdapter(myDataset,getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener( // and the click is handled
+                new RecyclerClickListener(quotes.this, new RecyclerClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        Log.d("click item", String.valueOf(position));
+                        TextView textView = view.findViewById(R.id.text_quote);
+                        quote=textView.getText().toString();
+                        Log.d("click item", quote);
+                        onBackPressed();
+                    }
+                }));
+
+
     }
 
     @Override
@@ -58,4 +73,5 @@ public class quotes extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
 }

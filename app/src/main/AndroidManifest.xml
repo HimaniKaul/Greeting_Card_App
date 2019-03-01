@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Card_open"></activity>
+        <!--<activity android:name=".Card_open"></activity>-->
         <activity android:name=".grid_Screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

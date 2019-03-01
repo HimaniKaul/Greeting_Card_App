@@ -198,20 +198,15 @@
         android:layout_marginEnd="2dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="1dp"
+        android:weightSum="10"
         android:orientation="horizontal">
         <Spinner
             android:id="@+id/sp_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@null"
-            android:theme="@style/spinnerTheme" />
-        <Spinner
-            android:id="@+id/sp_size"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@null"
+            android:layout_weight="5"
             android:theme="@style/spinnerTheme" />
         <View
             android:layout_width="1dp"
@@ -222,7 +217,8 @@
             android:background="#fff" />
         <ImageView
             android:id="@+id/bold"
-            android:layout_width="20dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
@@ -231,57 +227,66 @@
 
         <ImageView
             android:id="@+id/italic"
-            android:layout_width="20dp"
+            android:layout_width="0dp"
             android:layout_height="20dp"
+            android:layout_weight="1"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:scaleType="fitXY"
             android:src="@drawable/italic" />
 
         <ImageView
             android:id="@+id/group"
-            android:layout_width="20dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:scaleType="fitXY"
             android:src="@drawable/group" />
 
         <ImageView
             android:id="@+id/text"
-            android:layout_width="20dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:scaleType="fitXY"
             android:tint="#18ffff"
             android:src="@drawable/btn_base" />
 
-        <ImageView
-            android:id="@+id/l_align"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/left_align" />
-
-        <ImageView
-            android:id="@+id/c_align"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/center_align" />
-
-        <ImageView
-            android:id="@+id/r_align"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/right" />
     </LinearLayout>
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:visibility="gone"
+        android:layout_margin="250dp"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/enter_the_text"
+        android:inputType="text"
+        android:imeActionLabel="Done"
+        android:singleLine="true"
+        android:padding="10dp"
+        android:background="@drawable/border_for_editext"
+         />
+
+
+    <LinearLayout
+        android:id="@+id/seek_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_background"
+        android:layout_marginTop="300dp"
+        android:layout_marginStart="8dp"
+        android:visibility="gone"
+        android:layout_marginEnd="8dp">
+    <com.rtugeek.android.colorseekbar.ColorSeekBar
+        android:id="@+id/colorSlider"
+        android:layout_width="match_parent"
+        app:colorSeeds="@array/material_colors"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+
 </RelativeLayout>

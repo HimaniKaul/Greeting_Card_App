@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -40,10 +41,8 @@ public class tab_One extends Fragment {
         greeting_card_adapter adapter = new greeting_card_adapter(getActivity(), images);
         gv.setAdapter(adapter);
 
-
-
         //setting the alpha
-        FloatingActionsMenu fab_m = root_view.findViewById(R.id.fab_menu);
+        final FloatingActionsMenu fab_m = root_view.findViewById(R.id.fab_menu);
         final View v=root_view.findViewById(R.id.view);
         fab_m.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
@@ -53,9 +52,17 @@ public class tab_One extends Fragment {
             @Override
             public void onMenuExpanded() {
                 v.setVisibility(View.VISIBLE);
+                v.setClickable(true);
             }
         });
 
+        v.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                fab_m.collapse();
+                return false;
+            }
+        });
         //adding a fab
         FloatingActionButton fab1 = root_view.findViewById(R.id.second_fab);
         fab1.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +110,7 @@ public class tab_One extends Fragment {
                         String stringUri;
                         stringUri = imageUri.toString();
                         Intent intent = new Intent(Intent.ACTION_VIEW);
+                        Constants.imageuripath = "";
                         intent.setClass(getActivity(), image_from_gallery.class);
                         intent.putExtra("KEY", stringUri);
                         startActivity(intent);
