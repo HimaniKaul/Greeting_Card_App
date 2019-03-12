@@ -31,6 +31,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -58,6 +59,9 @@ import ja.burhanrashid52.photoeditor.PhotoEditorView;
 import ja.burhanrashid52.photoeditor.SaveSettings;
 import ja.burhanrashid52.photoeditor.ViewType;
 
+import static android.graphics.Typeface.MONOSPACE;
+import static android.graphics.Typeface.SANS_SERIF;
+
 public class image_from_gallery extends AppCompatActivity implements  s.StickerListener, frame.FrameListener, View.OnClickListener {
     private int IMAGE_GALLERY_REQUEST = 0;
     static  PhotoEditorView imageView;
@@ -81,10 +85,11 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
     EditText editText;View view;
     String text_from_edit_text= "";
     ImageView bold,italic,underline,color;
-    Typeface typeface;
+    Typeface typeface, typeface2; String typeface1;
     private int clicked_bold, clicked_Italic,under_line,color_=0;
     private ColorSeekBar colorSeekBar;
     private LinearLayout color_layout;
+    Typeface mTextRobotoTf;
 
 
     public static void changeImage(Bitmap bitmap_one, crop_image_class crop_image_class){
@@ -129,7 +134,6 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
         linearLayout = findViewById(R.id.scroll_layout);
         portrait=findViewById(R.id.imageView_portrait);
         editText=findViewById(R.id.edit_text);
-        text_from_edit_text=editText.getText().toString();
         bold=findViewById(R.id.bold);  bold.setOnClickListener(this);
         italic=findViewById(R.id.italic);  italic.setOnClickListener(this);
         underline=findViewById(R.id.group); underline.setOnClickListener(this);
@@ -137,10 +141,11 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
         colorSeekBar=findViewById(R.id.colorSlider);
         color_layout=findViewById(R.id.seek_layout);
 
-        italic.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.italic));
+        changed_color=getColor(R.color.button_background);
+        italic.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.italic));/////////////////////////
         bold.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.bold));
 
-        Typeface mTextRobotoTf = ResourcesCompat.getFont(this, R.font.roboto_medium);
+        mTextRobotoTf= ResourcesCompat.getFont(this, R.font.roboto_medium);
         mPhotoEditor = new PhotoEditor.Builder(this, imageView)
                 .setPinchTextScalable(true)
                 .setDefaultTextTypeface(mTextRobotoTf)
@@ -156,12 +161,50 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
 
         //spinner
         categories = new ArrayList<String>();
-        categories.add("Roboto");
-        categories.add("Block");
-        categories.add("Capital");
+        categories.add("Roboto Light");
+        categories.add("Alex Brush");
+        categories.add("Black Jack");
+        categories.add("Lobster");
         dataAdapter = new ArrayAdapter<String>(this, R.layout.spinner_custom, categories);
         s.setAdapter(dataAdapter);
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //use position value
+                switch (position)
+                { case 0: typeface=Typeface.defaultFromStyle(Typeface.NORMAL);
+                          typeface2=Typeface.defaultFromStyle(Typeface.NORMAL);
+                          typeface1=null;
+                          editText.setTypeface(null,Typeface.NORMAL);
+                          break;
+                case 1:
+                          typeface = Typeface.createFromAsset(getAssets(),"AlexBrush-Regular.ttf");
+                          typeface2 = Typeface.createFromAsset(getAssets(),"AlexBrush-Regular.ttf");
+                          typeface1 = "AlexBrush-Regular.ttf";
+                          editText.setTypeface(typeface);
+                        break;
 
+                case 2:
+                        typeface = Typeface.createFromAsset(getAssets(),"blackjack.otf");
+                        typeface2 = Typeface.createFromAsset(getAssets(),"blackjack.otf");
+                        typeface1 ="blackjack.otf";
+                        editText.setTypeface(typeface);
+                        break;
+
+                case 3:
+                        typeface = Typeface.createFromAsset(getAssets(),"Lobster_1.3.otf");
+                        typeface2 = Typeface.createFromAsset(getAssets(),"Lobster_1.3.otf");
+                        typeface1 = "Lobster_1.3.otf";
+                        editText.setTypeface(typeface);
+                        break;
+
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         //starts the crop window
         ImageButton crop = findViewById(R.id.crop_1);
@@ -332,7 +375,7 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    text_from_edit_text = editText.getText().toString();
+                     text_from_edit_text = editText.getText().toString();
                     if (!text_from_edit_text.equals("")) {
                         mPhotoEditor.addText(typeface, text_from_edit_text, changed_color);
                         editText.setVisibility(View.GONE);
@@ -446,7 +489,8 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
                 showSaveDialog();
             }});}
 
-    // fetching image from the gallery
+
+            // fetching image from the gallery
     public void on_Image_from_Gallery() {
         //prompting gallery
         Intent photopicker = new Intent(Intent.ACTION_PICK);
@@ -694,6 +738,7 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
     public void onBackPressed() {
         super.onBackPressed();
         count=0;
+        bitmap=null;
     }
 
     @Override
@@ -722,9 +767,15 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
         {
             case R.id.bold:
                 if(clicked_bold==0)
-                {   typeface= Typeface.defaultFromStyle(Typeface.BOLD);
-                    editText.setTypeface(null,Typeface.BOLD);
-                    clicked_bold=1;}
+                {    if(typeface2!=null)
+                     {typeface=Typeface.create(typeface2, Typeface.BOLD);
+                      editText.setTypeface(Typeface.createFromAsset(getAssets(),typeface1),Typeface.BOLD);}
+                     else
+                     { typeface= Typeface.defaultFromStyle(Typeface.BOLD);
+                       editText.setTypeface(null,Typeface.BOLD);}
+                       clicked_bold=1;
+                }
+
                 else if(clicked_bold==1)
                 {   typeface= Typeface.defaultFromStyle(Typeface.NORMAL);
                     editText.setTypeface(null,Typeface.NORMAL);
@@ -771,6 +822,7 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
                     colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
                     @Override
                     public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
+                       // colorSeekBar.setColorSeeds(R.array.material_colors);
                         editText.setTextColor(color);
                         changed_color=color;
                     }

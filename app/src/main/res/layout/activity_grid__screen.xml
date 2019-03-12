@@ -18,14 +18,14 @@
    <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="16dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:numColumns="2"
         android:adjustViewBounds="true"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp" />
+        android:verticalSpacing="10dp"/>
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

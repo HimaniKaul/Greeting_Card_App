@@ -10,10 +10,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
@@ -22,7 +24,7 @@ import java.io.InputStream;
 
 
 public class greeting_card_adapter extends BaseAdapter {
-    Context context; Bitmap bitmap;
+    Context context; Bitmap bitmap;  int click=1;
     int [] imageId;
     LayoutInflater inflater;
     public greeting_card_adapter(FragmentActivity mainActivity, int[] osImages) {
@@ -91,18 +93,64 @@ public class greeting_card_adapter extends BaseAdapter {
             }
         });
         //adding favourite
-        final ToggleButton toggleButton = convertView.findViewById(R.id.myToggleButton);
-        toggleButton.setChecked(false);
-        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp));
-        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//        final ToggleButton toggleButton = convertView.findViewById(R.id.myToggleButton);
+//        toggleButton.setChecked(false);
+//        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp));
+//        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked)
+//                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_black_24dp));
+//                else
+//                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp));
+//            }
+//        });
+
+
+        final ImageView un_fav=convertView.findViewById(R.id.imageView2);
+        final ImageView fav=convertView.findViewById(R.id.imageView3);
+        un_fav.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_black_24dp));
-                else
-                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp));
+            public void onClick(View v) {
+//                if(click==0)
+//                {
+//                    fav.setVisibility(View.VISIBLE);
+//                    un_fav.setVisibility(View.GONE);
+//                    click=1;
+//                } else if(click==1)
+//                {
+//                    un_fav.setVisibility(View.VISIBLE);
+//                    fav.setVisibility(View.GONE);
+//                    click=0;
+//                }
+
+                fav.setVisibility(View.VISIBLE);
+                un_fav.setVisibility(View.GONE);
             }
         });
+
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if(click==0)
+//                {
+//                    fav.setVisibility(View.VISIBLE);
+//                    un_fav.setVisibility(View.GONE);
+//                    click=1;
+//                } else if(click==1)
+//                {
+//                    un_fav.setVisibility(View.VISIBLE);
+//                    fav.setVisibility(View.GONE);
+//                    click=0;
+//                }
+                un_fav.setVisibility(View.VISIBLE);
+                fav.setVisibility(View.GONE);
+
+
+            }
+
+        });
+
         return convertView;
     }
 }

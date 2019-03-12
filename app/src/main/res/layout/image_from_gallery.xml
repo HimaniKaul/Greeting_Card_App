@@ -198,16 +198,17 @@
         android:layout_marginEnd="2dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="1dp"
-        android:weightSum="10"
+        android:weightSum="0.6"
         android:orientation="horizontal">
         <Spinner
             android:id="@+id/sp_text"
             android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@null"
-            android:layout_weight="5"
             android:theme="@style/spinnerTheme" />
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
@@ -217,8 +218,7 @@
             android:background="#fff" />
         <ImageView
             android:id="@+id/bold"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
@@ -227,9 +227,8 @@
 
         <ImageView
             android:id="@+id/italic"
-            android:layout_width="0dp"
+            android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:scaleType="fitXY"
@@ -237,8 +236,7 @@
 
         <ImageView
             android:id="@+id/group"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
@@ -247,8 +245,7 @@
 
         <ImageView
             android:id="@+id/text"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
@@ -277,8 +274,8 @@
         android:id="@+id/seek_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_background"
-        android:layout_marginTop="300dp"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="400dp"
         android:layout_marginStart="8dp"
         android:visibility="gone"
         android:layout_marginEnd="8dp">
@@ -286,7 +283,7 @@
         android:id="@+id/colorSlider"
         android:layout_width="match_parent"
         app:colorSeeds="@array/material_colors"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
     </LinearLayout>
 
 </RelativeLayout>

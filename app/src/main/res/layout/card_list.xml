@@ -27,19 +27,27 @@
             android:layout_height="32dp"
             android:gravity="center"
             android:layout_weight="9" />
-        <!--<ImageView-->
-            <!--android:id="@+id/imageView2"-->
-            <!--android:layout_width="15dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:src="@drawable/ic_favorite_border_black_24dp" />-->
-        <ToggleButton
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="15dp"
             android:layout_height="match_parent"
-            android:id="@+id/myToggleButton"
             android:layout_weight="1"
-            android:textOn=""
-            android:textOff=""/>
+            android:visibility="visible"
+            android:src="@drawable/ic_favorite_border_black_24dp" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:src="@drawable/ic_favorite_black_24dp" />
+        <!--<ToggleButton-->
+            <!--android:layout_width="15dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/myToggleButton"-->
+            <!--android:layout_weight="1"-->
+            <!--android:textOn=""-->
+            <!--android:textOff=""/>-->
     </LinearLayout>
 </RelativeLayout>
 
