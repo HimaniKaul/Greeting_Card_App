@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycle_view"
+    android:layout_width="wrap_content"
+    android:layout_marginStart="5dp"
+    android:layout_height="wrap_content">
+    <TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text_recycle_view"
+    android:layout_width="wrap_content"
+    android:hint="@string/show_typeface"
+    android:textSize="25sp"
+    android:layout_height="wrap_content"/>
+</RelativeLayout>

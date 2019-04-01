@@ -17,7 +17,13 @@
     <string name="share_image">Share Image</string>
     <string name="select_image">Select Image</string>
     <string name="shared_image">Shared Image</string>
-    <string name="enter_the_text">Enter The Text</string>
+    <string name="enter_the_text">Enter Text</string>
+    <string name="color">Color</string>
+    <string name="dialog_style">Style</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="show_typeface">ABC</string>
+    <string name="somethingwrong">Something is wrong</string>
 
     <string-array name="font_styles">
         <item>Roboto Light</item>

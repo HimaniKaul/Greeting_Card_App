@@ -1,4 +1,4 @@
-package com.example.himani_k.greeting_card;
+package com.example.himani_k.greeting_card.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +9,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private String[] mData_set;
-    Context context;
+import com.example.himani_k.greeting_card.Module.Category.CategoryStoreData;
+import com.example.himani_k.greeting_card.Module.Quotes.QuotesStoreData;
+import com.example.himani_k.greeting_card.R;
 
+import java.util.ArrayList;
+
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+    private final ArrayList<QuotesStoreData> lstdata;
+    Context context;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
        public ImageView imageView;
@@ -26,10 +31,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
        }
     }
 
-    public MyAdapter(String[] myData_set, Context context) {
-        mData_set = myData_set;
+    public MyAdapter(Context context, ArrayList<QuotesStoreData> myData_set) {
+        this.lstdata = myData_set;
         this.context=context;
     }
+
     // Create new views (invoked by the layout manager)
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -40,13 +46,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.mTextView.setText(mData_set[position]);
+    public void onBindViewHolder(final MyViewHolder holder, final int i) {
+        QuotesStoreData categoriesDataStorea = lstdata.get(i);
+        holder.mTextView.setText(categoriesDataStorea.getMessage());
     }
 
     // Return the size of your data set (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mData_set.length;
+        return lstdata.size();
     }
 }

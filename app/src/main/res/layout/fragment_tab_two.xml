@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="?attr/actionBarSize"
-    tools:context=".tab_two">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textColor="#000"/>
-
-</FrameLayout>
+    android:layout_height="wrap_content"
+    android:id="@+id/root_layout"
+    android:paddingTop="?attr/actionBarSize">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

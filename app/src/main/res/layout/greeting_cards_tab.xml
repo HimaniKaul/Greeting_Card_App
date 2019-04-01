@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:id="@+id/screen_two"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".greeting_cards_class">
+    tools:context=".Activity.greeting_cards_class">
 
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"

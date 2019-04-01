@@ -8,24 +8,20 @@
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    tools:context=".grid_Screen">
+    tools:context=".Activity.grid_Screen">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
         <include android:id="@+id/toolbar1"
                  layout="@layout/toolbar"/>
-   <GridView
+
+        <android.support.v7.widget.RecyclerView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="2"
-        android:adjustViewBounds="true"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp"/>
+        android:adjustViewBounds="true" />
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

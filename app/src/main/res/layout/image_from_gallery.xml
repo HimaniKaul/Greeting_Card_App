@@ -187,73 +187,7 @@
         app:fab_addButtonColorNormal="@color/colorAccent"
         app:fab_addButtonStrokeVisible="true"
         app:fab_labelStyle="@style/custom_fab"/>
-    <!-- setting the Text-->
-    <LinearLayout
-        android:id="@+id/text_design"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/layout_id"
-        android:background="#000"
-        android:visibility="gone"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="1dp"
-        android:weightSum="0.6"
-        android:orientation="horizontal">
-        <Spinner
-            android:id="@+id/sp_text"
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@null"
-            android:theme="@style/spinnerTheme" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="#fff" />
-        <ImageView
-            android:id="@+id/bold"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/bold" />
-
-        <ImageView
-            android:id="@+id/italic"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/italic" />
-
-        <ImageView
-            android:id="@+id/group"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/group" />
-
-        <ImageView
-            android:id="@+id/text"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:scaleType="fitXY"
-            android:tint="#18ffff"
-            android:src="@drawable/btn_base" />
-
-    </LinearLayout>
+ <!--Adding the dialog-->
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="wrap_content"
@@ -266,24 +200,7 @@
         android:imeActionLabel="Done"
         android:singleLine="true"
         android:padding="10dp"
-        android:background="@drawable/border_for_editext"
          />
 
-
-    <LinearLayout
-        android:id="@+id/seek_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:layout_marginTop="400dp"
-        android:layout_marginStart="8dp"
-        android:visibility="gone"
-        android:layout_marginEnd="8dp">
-    <com.rtugeek.android.colorseekbar.ColorSeekBar
-        android:id="@+id/colorSlider"
-        android:layout_width="match_parent"
-        app:colorSeeds="@array/material_colors"
-        android:layout_height="match_parent" />
-    </LinearLayout>
 
 </RelativeLayout>

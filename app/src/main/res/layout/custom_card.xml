@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".create_custom_card"
+    tools:context=".Activity.create_custom_card"
     android:orientation="vertical">
     <!--Setting Toolbar-->
     <android.support.v7.widget.Toolbar
@@ -87,12 +87,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="2"
                 android:orientation="horizontal"
                 android:layout_margin="10dp"
                 android:layout_below="@id/txt_custom">
             <LinearLayout
-                android:layout_width="130dp"
+                android:layout_width="0dp"
                 android:layout_height="130dp"
+                android:layout_weight="1"
                 android:id="@+id/ls1"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="40dp"
@@ -107,25 +109,28 @@
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:src="@drawable/ic_add_black_24dp_white" />
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/pt1"
-                android:layout_width="140dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@color/colorPrimary">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/portrait_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+
+                <LinearLayout
+                    android:id="@+id/pt1"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:src="@drawable/ic_add_black_24dp_white"
-                    app:borderWidth="0dp" />
-            </LinearLayout>
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="0.9"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/portrait_fab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:src="@drawable/ic_add_black_24dp_white"
+                        app:borderWidth="0dp" />
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
 </LinearLayout>

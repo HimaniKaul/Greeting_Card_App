@@ -2,13 +2,11 @@ package com.example.himani_k.greeting_card;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -18,33 +16,20 @@ import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.rtugeek.android.colorseekbar.ColorSeekBar;
-
-import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,10 +44,7 @@ import ja.burhanrashid52.photoeditor.PhotoEditorView;
 import ja.burhanrashid52.photoeditor.SaveSettings;
 import ja.burhanrashid52.photoeditor.ViewType;
 
-import static android.graphics.Typeface.MONOSPACE;
-import static android.graphics.Typeface.SANS_SERIF;
-
-public class image_from_gallery extends AppCompatActivity implements  s.StickerListener, frame.FrameListener, View.OnClickListener {
+public class image_from_gallery extends AppCompatActivity implements  s.StickerListener, frame.FrameListener, MyCustomdialog.OnInputListener{
     private int IMAGE_GALLERY_REQUEST = 0;
     static  PhotoEditorView imageView;
     Uri imageUri,share_uri = null;
@@ -75,21 +57,15 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
     PhotoEditorView portrait; PhotoEditorView landscape;
     private String stringUri;   int flag=0;
     static PhotoEditor mPhotoEditor; static int count, back;
-    private Spinner s, s1;
     private ArrayList<String> categories;
     private ArrayAdapter<String> dataAdapter;
     private ArrayList<String> categories1;
     private ArrayAdapter<String> dataAdapter1;
-    int undo,download,changed_color;
+    int undo,download;
     public static int first;
-    EditText editText;View view;
-    String text_from_edit_text= "";
-    ImageView bold,italic,underline,color;
-    Typeface typeface, typeface2; String typeface1;
-    private int clicked_bold, clicked_Italic,under_line,color_=0;
-    private ColorSeekBar colorSeekBar;
-    private LinearLayout color_layout;
+    View view;
     Typeface mTextRobotoTf;
+    int new_dialog=0;
 
 
     public static void changeImage(Bitmap bitmap_one, crop_image_class crop_image_class){
@@ -124,7 +100,6 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         contextOfApplication = getApplicationContext();
-        s= findViewById(R.id.sp_text);
         mStickerBSFragment = new s();
         mStickerBSFragment.setStickerListener(this);
         mframeBSFragment = new frame();
@@ -133,17 +108,8 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
         landscape = findViewById(R.id.imageView_plus);
         linearLayout = findViewById(R.id.scroll_layout);
         portrait=findViewById(R.id.imageView_portrait);
-        editText=findViewById(R.id.edit_text);
-        bold=findViewById(R.id.bold);  bold.setOnClickListener(this);
-        italic=findViewById(R.id.italic);  italic.setOnClickListener(this);
-        underline=findViewById(R.id.group); underline.setOnClickListener(this);
-        color=findViewById(R.id.text); color.setOnClickListener(this);
-        colorSeekBar=findViewById(R.id.colorSlider);
-        color_layout=findViewById(R.id.seek_layout);
 
-        changed_color=getColor(R.color.button_background);
-        italic.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.italic));/////////////////////////
-        bold.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.bold));
+//        final MyCustomdialog dialog = new MyCustomdialog();
 
         mTextRobotoTf= ResourcesCompat.getFont(this, R.font.roboto_medium);
         mPhotoEditor = new PhotoEditor.Builder(this, imageView)
@@ -158,53 +124,6 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
-        //spinner
-        categories = new ArrayList<String>();
-        categories.add("Roboto Light");
-        categories.add("Alex Brush");
-        categories.add("Black Jack");
-        categories.add("Lobster");
-        dataAdapter = new ArrayAdapter<String>(this, R.layout.spinner_custom, categories);
-        s.setAdapter(dataAdapter);
-        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //use position value
-                switch (position)
-                { case 0: typeface=Typeface.defaultFromStyle(Typeface.NORMAL);
-                          typeface2=Typeface.defaultFromStyle(Typeface.NORMAL);
-                          typeface1=null;
-                          editText.setTypeface(null,Typeface.NORMAL);
-                          break;
-                case 1:
-                          typeface = Typeface.createFromAsset(getAssets(),"AlexBrush-Regular.ttf");
-                          typeface2 = Typeface.createFromAsset(getAssets(),"AlexBrush-Regular.ttf");
-                          typeface1 = "AlexBrush-Regular.ttf";
-                          editText.setTypeface(typeface);
-                        break;
-
-                case 2:
-                        typeface = Typeface.createFromAsset(getAssets(),"blackjack.otf");
-                        typeface2 = Typeface.createFromAsset(getAssets(),"blackjack.otf");
-                        typeface1 ="blackjack.otf";
-                        editText.setTypeface(typeface);
-                        break;
-
-                case 3:
-                        typeface = Typeface.createFromAsset(getAssets(),"Lobster_1.3.otf");
-                        typeface2 = Typeface.createFromAsset(getAssets(),"Lobster_1.3.otf");
-                        typeface1 = "Lobster_1.3.otf";
-                        editText.setTypeface(typeface);
-                        break;
-
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         //starts the crop window
         ImageButton crop = findViewById(R.id.crop_1);
@@ -243,6 +162,42 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
                 Intent i= new Intent(image_from_gallery.this,quotes.class);
                 startActivity(i);
             }
+        });
+
+        // text dialog box
+        ImageButton text= findViewById(R.id.textt);
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyCustomdialog dialog=new MyCustomdialog();
+                dialog.show(getSupportFragmentManager(),null);
+            }
+        });
+
+        //long press
+        mPhotoEditor.setOnPhotoEditorListener(new OnPhotoEditorListener() {
+            @Override
+            public void onEditTextChangeListener(View rootView, String text, int colorCode) {
+                new_dialog++;
+                rootView.setVisibility(View.GONE);
+                MyCustomdialog dialog=new MyCustomdialog();
+                dialog.show(getSupportFragmentManager(),null);
+            }
+            @Override
+            public void onAddViewListener(ViewType viewType, int numberOfAddedViews) {
+            }
+            @Override
+            public void onRemoveViewListener(int numberOfAddedViews) { }
+
+            @Override
+            public void onRemoveViewListener(ViewType viewType, int numberOfAddedViews) {
+            }
+
+            @Override public void onStartViewChangeListener(ViewType viewType) {
+            }
+
+            @Override
+            public void onStopViewChangeListener(ViewType viewType) { }
         });
 
 
@@ -321,46 +276,16 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
             }}
 
         //rotating the fab button
-        final LinearLayout lay= findViewById(R.id.text_design);
         FloatingActionsMenu fb = findViewById(R.id.fab_button);
         fb.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuCollapsed() {
                 linearLayout.setVisibility(View.GONE);
-                if(color_==1)
-                {  color_layout.setVisibility(View.GONE);
-                    color_=0;
-                }
-                if(flag==1){lay.setVisibility(View.GONE);
-                    imageView.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            editText.setVisibility(View.GONE);
-                            return false;
-                        }
-                    });
-                    flag=0;} }
+                    flag=0;}
             @Override
             public void onMenuExpanded() {
                 linearLayout.setVisibility(View.VISIBLE);
-                // calling the text layout
-                ImageButton ig_text = findViewById(R.id.textt);
-                ig_text.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(flag==0)
-                        {   linearLayout.setVisibility(View.GONE);
-                            lay.setVisibility(View.VISIBLE);
-                            editText.setVisibility(View.VISIBLE);
-                            imageView.setOnTouchListener(new View.OnTouchListener()
-                            {@Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                if(editText.getVisibility()==View.VISIBLE) {
-                                    editText.setVisibility(View.GONE); }
-                                else if (editText.getVisibility()!=View.VISIBLE)
-                                {editText.setVisibility(View.VISIBLE);}
-                                return false;
-                            }}); flag=1;} }});}});
+            }});
 
 //        runOnUiThread(new Runnable() {
 //            @Override
@@ -368,53 +293,6 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
 //
 //            }
 //        });
-
-
-        //click for bold and Italic
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                     text_from_edit_text = editText.getText().toString();
-                    if (!text_from_edit_text.equals("")) {
-                        mPhotoEditor.addText(typeface, text_from_edit_text, changed_color);
-                        editText.setVisibility(View.GONE);
-                        editText.setText("");
-                         if(color_==1)
-                        {  color_layout.setVisibility(View.GONE);
-                            color_=0;
-                        }
-                        UIUtil.hideKeyboard(image_from_gallery.this);
-
-                    }
-                    return true; }
-                return false;
-            }});
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        mPhotoEditor.setOnPhotoEditorListener(new OnPhotoEditorListener() {
-            @Override
-            public void onEditTextChangeListener(View rootView, String text, int colorCode) {
-                rootView.setVisibility(View.GONE);
-                editText.setVisibility(View.VISIBLE);
-                editText.setText(text); }
-            @Override
-            public void onAddViewListener(ViewType viewType, int numberOfAddedViews) {
-            }
-            @Override
-            public void onRemoveViewListener(int numberOfAddedViews) { }
-
-            @Override
-            public void onRemoveViewListener(ViewType viewType, int numberOfAddedViews) {
-            }
-
-            @Override public void onStartViewChangeListener(ViewType viewType) {
-            }
-
-            @Override
-            public void onStopViewChangeListener(ViewType viewType) { }
-        });
 
         //setting undo and redo
         ImageView ig2= findViewById(R.id.imageButton2);
@@ -759,83 +637,10 @@ public class image_from_gallery extends AppCompatActivity implements  s.StickerL
         mPhotoEditor.addImage(bitmap);
     }
 
-    @SuppressLint("RtlHardcoded")
     @Override
-    public void onClick(View v) {
-
-        switch (v.getId())
-        {
-            case R.id.bold:
-                if(clicked_bold==0)
-                {    if(typeface2!=null)
-                     {typeface=Typeface.create(typeface2, Typeface.BOLD);
-                      editText.setTypeface(Typeface.createFromAsset(getAssets(),typeface1),Typeface.BOLD);}
-                     else
-                     { typeface= Typeface.defaultFromStyle(Typeface.BOLD);
-                       editText.setTypeface(null,Typeface.BOLD);}
-                       clicked_bold=1;
-                }
-
-                else if(clicked_bold==1)
-                {   typeface= Typeface.defaultFromStyle(Typeface.NORMAL);
-                    editText.setTypeface(null,Typeface.NORMAL);
-                    clicked_bold=0;
-                }
-
-                if(clicked_bold==1&& clicked_Italic==1){
-                    typeface= Typeface.defaultFromStyle(Typeface.BOLD_ITALIC);
-                    editText.setTypeface(null,Typeface.BOLD_ITALIC);
-                }
-                break;
-
-            case R.id.italic :
-                if(clicked_Italic==0)
-                {   typeface= Typeface.defaultFromStyle(Typeface.ITALIC);
-                    editText.setTypeface(null,Typeface.ITALIC);
-                    clicked_Italic=1;}
-                else if(clicked_Italic==1)
-                {   typeface= Typeface.defaultFromStyle(Typeface.NORMAL);
-                    editText.setTypeface(null,Typeface.NORMAL);
-                    clicked_Italic=0;
-                }
-
-                if(clicked_bold==1&& clicked_Italic==1){
-                    typeface= Typeface.defaultFromStyle(Typeface.BOLD_ITALIC);
-                    editText.setTypeface(null,Typeface.BOLD_ITALIC);
-                }
-                break;
-
-            case R.id.group:
-                if(under_line==0)
-               {   editText.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-                    under_line=1;
-               }
-                else if(under_line==1)
-                {  editText.setPaintFlags(0);
-                    under_line=0;
-                }
-                break;
-
-            case R.id.text:
-                if(color_==0)
-                {   color_layout.setVisibility(View.VISIBLE);
-                    colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
-                    @Override
-                    public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
-                       // colorSeekBar.setColorSeeds(R.array.material_colors);
-                        editText.setTextColor(color);
-                        changed_color=color;
-                    }
-                });
-                    color_=1;
-                }
-                else if(color_==1)
-                {  color_layout.setVisibility(View.GONE);
-                    color_=0;
-                }
-                break;
-
-        }}}
+    public void sendInput(String input,int color) {
+        mPhotoEditor.addText(input,color);
+    }}
 
 
 
