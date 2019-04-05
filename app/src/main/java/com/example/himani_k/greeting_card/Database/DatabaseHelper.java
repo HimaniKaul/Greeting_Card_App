@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // code to add the new contact
-    public void addContact(Favourtites fav) {
+    public void addCards(Favourtites fav) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -52,27 +52,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-//    // code to get the single contact
-//    Favourtites getfav(int id) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor cursor = db.query(TABLE_Name, new String[] { KEY_ID,
-//                        KEY_NAME}, KEY_ID + "=?",
-//                new String[] { String.valueOf(id) }, null, null, null, null);
-//        if (cursor != null)
-//            cursor.moveToFirst();
-//
-//        Favourtites favourtites = new Favourtites(Integer.parseInt(cursor.getString(0)),
-//                cursor.getString(1));
-//        // return contact
-//        return favourtites;
-//    }
-
-    // code to get all contacts in a recycler view
-    public List<Favourtites> getAllContacts() {
+    // code to get all cards in a recycler view
+    public List<Favourtites> getAllCards() {
         List<Favourtites> Fav_List = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_Name;
+        String selectQuery = "SELECT * FROM " + TABLE_Name;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -92,35 +76,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Fav_List;
     }
 
-    // code to update the single contact
-    public int updateContact(Favourtites fav) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, fav.getImage());
-
-        // updating row
-        return db.update(TABLE_Name, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(fav.getId()) });
-    }
-
     // Deleting single contact
-    public void deleteContact(Favourtites fav) {
+    public void deleteCards(Favourtites fav) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_Name, KEY_ID + " = ?",
                 new String[] { String.valueOf(fav.getId()) });
         db.close();
     }
-
-//    // Getting contacts Count
-//    public int getContactsCount() {
-//        String countQuery = "SELECT  * FROM " + TABLE_Name;
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.rawQuery(countQuery, null);
-//        cursor.close();
-//
-//        // return count
-//        return cursor.getCount();
-//    }
-
 }

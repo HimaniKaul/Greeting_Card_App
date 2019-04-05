@@ -275,7 +275,7 @@ public class tab_One extends Fragment {
             @Override
             public void onClick(View v) {
                 tab_One.flag_check = 3;
-                 s= categoriesDataStorea.getImage();
+                s= categoriesDataStorea.getImage();
                 Log.d("Send Image",""+s);
                 Intent intent = new Intent();
                 intent.setClass(context, image_from_gallery.class);
@@ -290,9 +290,9 @@ public class tab_One extends Fragment {
              public void onClick(View v) {
                  holder.img_un_fav.setVisibility(View.VISIBLE);
                  holder.img_fav.setVisibility(View.GONE);
-                 // Inserting Contacts
+                 // Inserting Cards
                  Log.d("Insert: ", "Inserting ..");
-                db.addContact(new Favourtites(i,s));
+                 db.addCards(new Favourtites(i,s));
                  Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
              }
          });
@@ -301,7 +301,7 @@ public class tab_One extends Fragment {
             public void onClick(View v) {
                 holder.img_fav.setVisibility(View.VISIBLE);
                 holder.img_un_fav.setVisibility(View.GONE);
-                db.deleteContact(new Favourtites(i,s));
+                db.deleteCards(new Favourtites(i,s));
                 Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
             }
         });

@@ -27,10 +27,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -46,6 +48,8 @@ import com.example.himani_k.greeting_card.Fragment.tab_One;
 import com.example.himani_k.greeting_card.R;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.rtugeek.android.colorseekbar.ColorSeekBar;
+
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -192,18 +196,14 @@ public class image_from_gallery extends AppCompatActivity implements s.StickerLi
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                show_Dialog_Box(null, null, "", 0);
-
+                show_Dialog_Box(null, null, "", 0,"");
             }
         });
 
         mPhotoEditor.setOnPhotoEditorListener(new OnPhotoEditorListener() {
             @Override
             public void onEditTextChangeListener(View rootView, String text, int colorCode) {
-                show_Dialog_Box(rootView, text_styles_adapter.setTypeFace, text, colorCode);
-                if (b == 1) {
-                    rootView.setVisibility(View.GONE);
-                }
+                show_Dialog_Box(rootView, text_styles_adapter.setTypeFace, text, colorCode,text);
             }
 
             @Override
@@ -443,7 +443,7 @@ public class image_from_gallery extends AppCompatActivity implements s.StickerLi
 
 
         //show dialog
-        public void show_Dialog_Box ( final View rootview, Typeface typeface, String Text,int Color)
+        public void show_Dialog_Box ( final View rootview, Typeface typeface, String Text,int Color,final String edit)
         {
             // get prompts.xml view
             LayoutInflater li = LayoutInflater.from(image_from_gallery.this);
@@ -473,6 +473,9 @@ public class image_from_gallery extends AppCompatActivity implements s.StickerLi
                     colorr = color;
                 }
             });
+
+
+
 
             // specify an adapter (see also next example)
             final Typeface[] myDataset = {
@@ -511,18 +514,18 @@ public class image_from_gallery extends AppCompatActivity implements s.StickerLi
                     .setPositiveButton("OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    if (!userInput.getText().toString().equals("")) {
+                                    if(edit.equals("")) {
                                         mPhotoEditor.addText(text_styles_adapter.setTypeFace, userInput.getText().toString(), colorr);
-                                        b = 1;
                                     }
-
+                                    else {
+                                        mPhotoEditor.editText(rootview, text_styles_adapter.setTypeFace, userInput.getText().toString(), colorr);
+                                    }
                                 }
                             })
                     .setNegativeButton("Cancel",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
-                                    b = 0;
                                 }
                             });
 

@@ -151,7 +151,7 @@ public class frame extends BottomSheetDialogFragment {
                             categoriesDataStore.setFrame(frame);
                             arrayListCat.add(categoriesDataStore);
 
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
                             rvEmoji.setLayoutManager(gridLayoutManager);
                             FrameAdapter frameAdapter = new FrameAdapter(getActivity(), arrayListCat);
                             rvEmoji.setAdapter(frameAdapter);

@@ -1,9 +1,8 @@
                 package com.example.himani_k.greeting_card.Activity;
 
-                import android.app.ProgressDialog;
                 import android.content.Context;
-                import android.content.Intent;
-                import android.os.Bundle;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +15,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-                import android.widget.RelativeLayout;
-                import android.widget.TextView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.himani_k.greeting_card.Constant.Constants;

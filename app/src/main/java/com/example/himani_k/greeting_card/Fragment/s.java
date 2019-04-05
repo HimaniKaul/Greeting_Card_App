@@ -158,7 +158,7 @@ public class s extends BottomSheetDialogFragment {
 
                             arrayListCat.add(categoriesDataStore);
 
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
                             rvEmoji.setLayoutManager(gridLayoutManager);
                             StickerAdapter stickerAdapter = new StickerAdapter(getActivity(), arrayListCat);
                             rvEmoji.setAdapter(stickerAdapter);
